@@ -10,7 +10,7 @@ class Birthday:
         for contact in address_book.values():
             birthday_date = contact.get_birthday_date()
 
-            if birthday_date and current_date <= birthday_date < upcoming_date:
+            if  birthday_date == upcoming_date:
                 upcoming_birthdays_list.append(contact)
 
         return upcoming_birthdays_list
