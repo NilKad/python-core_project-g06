@@ -2,7 +2,12 @@
 # contact
 # addressbook
 
-# notes
+# note-add -n ""
+# note-del id
+# note-add
+# note-add
+# note-add
+
 
 # sort-files
 
@@ -10,8 +15,6 @@
 
 
 # import contacts
-
-from datetime import datetime, timedelta
 
 # from contact import Contacts
 
@@ -32,32 +35,6 @@ from datetime import datetime, timedelta
 # print(m.constacts)
 # my_record = m.record
 # print(my_record)
-
-cur_date = datetime.now()
-# cur_date = datetime.strptime("2023-12-28", "%Y-%m-%d")
-
-br = datetime.now() + timedelta(days=6)
-br_minus = datetime.now() - timedelta(days=6)
-upcoming_date = datetime.now() + timedelta(days=10)
-print(f"\ncur_date: {cur_date}\nbr: {br}\nupcoming_date: {upcoming_date}\n")
-
-# if cur_date <= br < upcoming_date:
-if cur_date <= br < upcoming_date:
-    print("True")
-else:
-    print("False")
-
-if cur_date <= br_minus < upcoming_date:
-    print("True")
-else:
-    print("False")
-
-
-def handler_hello():
-    pass
-
-
-# if birthday_date and current_date <= birthday_date < upcoming_date:
 
 
 command_list = {
