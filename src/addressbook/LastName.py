@@ -1,7 +1,7 @@
 import re
 
 
-class FirstName:
+class LastName:
 
     def __init__(self, value):
         if not self.is_valid(value):

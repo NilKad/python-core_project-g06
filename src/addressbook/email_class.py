@@ -1,8 +1,7 @@
 import re
 
 
-class FirstName:
-
+class Email:
     def __init__(self, value):
         if not self.is_valid(value):
             raise ValueError("Invalid value")
@@ -12,9 +11,7 @@ class FirstName:
         return str(self.__value)
 
     def is_valid(self, value):
-        if not re.fullmatch(r'[a-zA-Zа-яА-Я]{2,}', value):
-            return False
-        if not value.istitle():
+        if not re.fullmatch(r'[a-zA-Z]{1}[\w\.]+@[a-zA-Z]+\.[a-zA-Z]{2,}', value):
             return False
         return True
 
