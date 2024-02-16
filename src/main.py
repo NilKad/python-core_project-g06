@@ -10,21 +10,54 @@
 
 
 # import contacts
-# from contacts import Contacts
-import contacts
 
-m = Contacts()
+from datetime import datetime, timedelta
+
+# from contact import Contacts
+
+
+# print(dir(contacts))
+
+# from contacts import Contacts
+# from contacts import Contacts
+# from contacts import *
+# import contacts
+
+
+# m = Contacts()
+# print(m.record)
 
 # print(m.__)
 # print(m.constacts)
 # print(m.constacts)
-print(m.record)
 # my_record = m.record
 # print(my_record)
+
+cur_date = datetime.now()
+# cur_date = datetime.strptime("2023-12-28", "%Y-%m-%d")
+
+br = datetime.now() + timedelta(days=6)
+br_minus = datetime.now() - timedelta(days=6)
+upcoming_date = datetime.now() + timedelta(days=10)
+print(f"\ncur_date: {cur_date}\nbr: {br}\nupcoming_date: {upcoming_date}\n")
+
+# if cur_date <= br < upcoming_date:
+if cur_date <= br < upcoming_date:
+    print("True")
+else:
+    print("False")
+
+if cur_date <= br_minus < upcoming_date:
+    print("True")
+else:
+    print("False")
 
 
 def handler_hello():
     pass
+
+
+# if birthday_date and current_date <= birthday_date < upcoming_date:
 
 
 command_list = {

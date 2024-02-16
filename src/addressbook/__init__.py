@@ -1,2 +1,2 @@
 print("init Contacts")
-from contacts.contacts import Contacts
+from contact.contact import Contacts
