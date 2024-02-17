@@ -14,7 +14,6 @@ class Notebook(UserList):
 
 
     def find_by_tag(self, tag):
-        #Повертає список заголовків статей по заданому тегу
         result = []
         for note in self.data:
             if tag in note.tag:
@@ -34,7 +33,6 @@ class Notebook(UserList):
     
 
     def sort_by_tag(self):
-        #Повертає словник з де ключ це тег, а значення список із статей в яких він є
         result = {}
         for note in self:
             for tag in note.tag:
@@ -92,13 +90,11 @@ class Notebook(UserList):
     
     
     def delete(self, id):
-        #Функція видаляє по ID 
         for note in self.data:
             if note.ID == id:
                 self.data.remove(note)
     
     def show_all_notes(self):
-        #
         contact_table = Table(title='All notes', show_lines=True, width=125)
         contact_table.add_column('ID', style='cyan')
         contact_table.add_column('Tag', style='magenta')
