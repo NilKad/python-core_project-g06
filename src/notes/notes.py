@@ -10,12 +10,10 @@ class Note:
     
     def add_tag(self, tag):
     #Якщо користувач пропустить знак '#' під час введення, програма автоматично його додасть
-        self.tag = tag.split(' ')
-        for elem in self.tag:
-            if elem[0] != '#':
-                tags_elem = '#' + elem
-                self.tag.remove(elem)
-                self.tag.insert(0, tags_elem)
+        if self.tag == ['No tag`s']:
+            self.tag = tag.split(' ')
+        else:
+            self.tag.append(tag)
 
     def edit_tag(self, new_tag):
         self.tag = new_tag.split(' ')
@@ -45,7 +43,8 @@ note1 = Note('Modern Buildings', 'Modern buildings showcase a wide range of arch
 note1.add_tag('buildings architecture #design')
 
 note2 = Note('Salvador Dali', 'Dalí was a leading figure in the Surrealist movement, \nwhich sought to unlock the creative potential of the unconscious mind.')
-note2.add_tag('art #surrealism')
+note2.add_tag('art')
+note2.add_tag('art2')
 
 note3 = Note('New Inventions', 'Explore the latest inventions and technological advancements that are shaping the future.')
 note3.add_tag('technology #innovation')
