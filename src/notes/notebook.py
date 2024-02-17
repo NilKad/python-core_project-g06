@@ -60,7 +60,8 @@ class Notebook(UserList):
             if note.ID == id:
                 all_tag = ''
                 for tag in note.tag:
-                    all_tag += tag
+                    all_tag = all_tag + ', ' + tag
+                    all_tag = all_tag.removeprefix(', ')
                 contact_table = Table(title='Find by ID', show_lines=True, width=125)
                 contact_table.add_column('ID', style='cyan')
                 contact_table.add_column('Tag', style='magenta')
@@ -80,7 +81,8 @@ class Notebook(UserList):
                 result.append(note)
             all_tag = ''
             for tag in note.tag:
-                all_tag += tag        
+                all_tag = all_tag + ', ' + tag
+                all_tag = all_tag.removeprefix(', ')       
 
         contact_table = Table(title='Find by title', show_lines=True, width=125)
         contact_table.add_column('ID', style='cyan')
@@ -111,7 +113,8 @@ class Notebook(UserList):
         for note in self.data:
             all_tag = ''
             for tag in note.tag:
-                all_tag += tag
+                all_tag = all_tag + ', ' + tag
+                all_tag = all_tag.removeprefix(', ')
             contact_table.add_row(str(note.ID), all_tag, note.title, note.text)
 
         console = Console()
