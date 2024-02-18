@@ -2,7 +2,6 @@ from collections import UserList
 from rich.console import Console
 from rich.table import Table
 
-
 class Notes(UserList):
     __id = 1
     def add_note(self, note):
