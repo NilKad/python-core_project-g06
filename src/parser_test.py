@@ -1,3 +1,6 @@
+import argparse
+
+
 def createParser():
     parser = argparse.ArgumentParser(
         prog="myhelper", description="You helper application."
@@ -47,11 +50,11 @@ def createParser():
         help="\033[31mInput %(dest)s for note\033[0m",
     )
 
-    print("-----------------")
-    print(parser.format_help())
-    print(textc("dsdadsad", "RED"))
-    print("\033[38;5;245m@@@@@@@@@@@@@@@@@\033[0m")
-    print("\033[250m1234\033[0m")
+    # print("-----------------")
+    # print(parser.format_help())
+    # print(textc("dsdadsad", "RED"))
+    # print("\033[38;5;245m@@@@@@@@@@@@@@@@@\033[0m")
+    # print("\033[250m1234\033[0m")
 
 
     
