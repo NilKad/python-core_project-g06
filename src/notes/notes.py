@@ -99,8 +99,8 @@ class Notes(UserList):
             if note.ID == id:
                 self.data.remove(note)
     
+    
     def show_all_notes(self):
-        
         contact_table = Table(title='All notes', show_lines=True, width=125)
         contact_table.add_column('ID', style='cyan')
         contact_table.add_column('Tag', style='magenta')
