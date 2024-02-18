@@ -1,5 +1,65 @@
 import argparse
+import shutil
+from unittest import result
 
+from lib.textc import textc
+
+#!!!!!!!!!!!!!!!
+# size_console = shutil.get_terminal_size()
+# print(size_console)
+#!!!!!!!!!!!!!!!
+
+print(textc(f"sadadasd", "RED"))
+
+
+def addition_input(args, req_params, var_in_set):
+    args_dict = vars(args)
+    new_args_dict = {}
+    excl_params = ["command", "func"]
+
+    print(textc(f"Press CTRL-C to skeep", "DARKGREY"))
+    for key, value in args_dict.items():
+        if value in excl_params:
+            continue
+        if not value:
+            while True:
+                cur_var = [] if key in new_args_dict else ""
+                try:
+                    cur_var = input(textc(f"Input {key} [] #: ", "GREEN"))
+
+                    if key in req_params and cur_var == "":
+                        print(textc(f"{key} is requared value! please enter", "RED"))
+                        continue
+
+                    if key in var_in_set:
+                        new_args_dict[key] = set(cur_var.split())
+                    else:
+                        new_args_dict[key] = cur_var
+
+                    break
+                except KeyboardInterrupt as e:
+                    print(f"cur_var: {cur_var} len: {len(cur_var)}")
+                    print(textc(f"\nKeyboard pressed Ctrl-C\nKeep input", "YELLOW"))
+                    new_args_dict[key] = ""
+                    break
+        elif key not in excl_params:
+            new_args_dict[key] = ""
+
+    print(f"new_args: {new_args_dict}")
+    return new_args_dict
+
+
+def handler_add_note(args):
+    print(f"args: {args}")
+    req_params = ["subject", "content"]
+    # excl_params = ["command", "func"]
+    variables_in_set = ["tags"]
+
+    result = addition_input(args, req_params, variables_in_set)
+    print(f"result: {result}")
+
+    return result
+def handler_
 
 def createParser():
     parser = argparse.ArgumentParser(
@@ -19,7 +79,7 @@ def createParser():
 
     note_add_parser = subparser.add_parser("add", help="note add help")
     # note_add_parser.set_defaults(func=note_add_parser.print_help())
-    note_add_parser.set_defaults(func=handler_note)
+    note_add_parser.set_defaults(func=handler_add_note)
     note_add_parser.add_argument(
         "-s",
         "--subject",
@@ -56,10 +116,6 @@ def createParser():
     # print("\033[38;5;245m@@@@@@@@@@@@@@@@@\033[0m")
     # print("\033[250m1234\033[0m")
 
-
-    
-    
-
     # note_add_parser = note_parser.add_subparsers(help="L3 subparser", dest="command")
     # note_add_parser.add_parser("add", help="note add help")
     # note_add_parser.set_defaults(func=handler_note)
@@ -94,3 +150,28 @@ def createParser():
     # note_parser.add_argument("note")
     # return parser
     return parser.parse_args()
+
+
+if __name__ == "__main__":
+    # print(sys.argv)
+
+    # parser = createParser()
+    args = createParser()
+    print(f"args: {args}")
+    print(f"args.command: {args.command}")
+    # print(not args)
+    # print(f"vars(args): {vars(args)}")
+    # print(not vars(args))
+    # Namespace()
+
+    args.func(args)
+    print(f"new args: {args}")
+
+    # if namespace == None:
+    #     parser.print_help()
+    # # print(namespace.name)
+
+    # print(f"parser: {parser}")
+    # print(f"parser2: {parser.print_usage}")
+    # print(f"parser3: {dir(parser)}")
+    # print(f"\nparser4: {parser._registries.parsers}")
