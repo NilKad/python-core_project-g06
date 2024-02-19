@@ -1,6 +1,13 @@
 from datetime import datetime, timedelta
 
 class Birthday:
+    def __init__(self, birthday_date):
+        self.birthday_date = birthday_date
+
+    def get_birthday_date(self):
+        return self.birthday_date
+
+    @staticmethod
     def upcoming_birthdays(address_book, days):
         current_date = datetime.now().date()
         upcoming_date = current_date + timedelta(days=days)
