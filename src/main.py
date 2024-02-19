@@ -1,5 +1,6 @@
 import argparse
 import sys
+from lib.textc import textc
 from parser_act import create_parser
 
 # phonebook
@@ -33,7 +34,7 @@ from parser_act import create_parser
 
 def main():
     # pass
-    args = create_parser()
+    parser_main = create_parser()
     # args.parse_args(["note", "-h"])
 
     # create_parser()
@@ -42,11 +43,13 @@ def main():
 
         if command_input == "":
             continue
-
+        command_split = command_input.split()
         try:
-            args = args.parse_args(command_input.split())
-            print(args)
-            args.func(args)
+
+            parser_res = parser_main.parse_args(command_split)
+            print(textc(f"----- main args: {parser_res}", "GREEN"))
+            result_dict = parser_res.func(parser_res)
+            print(textc(f'result_dict: {result_dict}', "YELLOW"))
         except KeyboardInterrupt:
             print("--------KeyboardInterrupt--------Exception, e:")
             sys.exit()

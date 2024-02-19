@@ -48,7 +48,9 @@ def addition_input(args, req_params, var_in_set):
                     new_args_dict[key] = ""
                     break
         elif key not in excl_params:
-            new_args_dict[key] = ""
+            new_args_dict[key] = set(value) if key in var_in_set else value
+        # else:
+        # new_args_dict[key] = value
 
     print(f"new_args: {new_args_dict}")
     return new_args_dict
@@ -61,13 +63,13 @@ def handler_exit(args):
 
 
 def handler_add_note(args):
-    print(f"args: {args}")
+    print(f"__handler_add_note args: {args}")
     req_params = ["subject", "content"]
     # excl_params = ["command", "func"]
     variables_in_set = ["tags"]
 
     result = addition_input(args, req_params, variables_in_set)
-    print(f"result: {result}")
+    print(f"____handler_add_note result: {result}")
 
     return result
 
@@ -129,7 +131,7 @@ def create_parser():
         "-c",
         "--content",
         # required=True,
-        # dest="content",
+        dest="content",
         # default="",
         type=str,
         help=textc("Input %(dest)s for note", "RED"),
@@ -138,7 +140,7 @@ def create_parser():
         "-t",
         "--tags",
         # required=True,
-        # dest="content",
+        dest="tags",
         # default="",
         type=str,
         help="\033[31mInput %(dest)s for note\033[0m",
