@@ -1,48 +1,23 @@
 import os
 from pathlib import Path
-import shutil
-import sys
 
 dir_suff_dict = {"Images": ['.jpeg', '.png', '.jpg', '.svg', '.bmp'],
                  "Video": [".avi", ".mp4", ".mov",  ".wkv",  ".mpg", ".mpeg"],
                  "Documents": [".doc", ".docx", ".txt", ".pdf",  ".xls", ".xlsx", ".pptx"],
-                 "Audio": [".aac", ".mp3",  ".wav", ".wma"],
-                 "Archives": [".zip", ".gz", ".tar", ".gztar", ".bztar", ".ztar"],
+                 "Audio": ['.aac', '.adt', '.adts', '.mp3', ".wav", ".wma"],
+                 "Archives": [".zip", ".gz", ".tar", ".gztar", ".bztar", ".ztar", '.rar'],
+                 "Python": [".py"],
+                 "EXE": ['.exe', '.bat', '.msi', '.com'],
                  "Other": []
                  }
-
-
-def normalize(word):
-    CYRILLIC_SYMBOLS = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяєіїґ"
-    TRANSLATION = ("a", "b", "v", "g", "d", "e", "e", "j", "z", "i", "j", "k", "l", "m", "n", "o", "p", "r", "s", "t", "u",
-                   "f", "h", "ts", "ch", "sh", "sch", "", "y", "", "e", "yu", "ya", "je", "i", "ji", "g")
-    TRANS = {}
-    Leter_kiril = []
-    for leter in CYRILLIC_SYMBOLS:
-        Leter_kiril.append(leter)
-    for c, l in zip(Leter_kiril, TRANSLATION):
-        TRANS[ord(c)] = l
-        TRANS[ord(c.upper())] = l.upper()
-    word = word.translate(TRANS)
-    i = 0
-    for ch in word:
-        if (ord(ch) >= ord('a') and ord(ch) <= ord('z')) or (ord(ch) >= ord('A') and ord(ch) <= ord('Z')) or (ord(ch) >= ord('0') and ord(ch) <= ord('9')) or ch == '_':
-            i += 1
-        else:
-            word_l = list(word)
-            word_l[i] = "_"
-            word = ''.join(word_l)
-            i += 1
-    return word
-
-
 known_suff = []
 all_suff = []
 v = 0
 
 
-def sort_func(path_dir, v):
+def sort_func(path_dir, dst_path, v):
     cur_dir = Path(path_dir)
+    next_dir = Path(dst_path)
     dir_path = []
 
     for root, dirs, files in os.walk(path_dir):
@@ -53,40 +28,24 @@ def sort_func(path_dir, v):
             continue
         for file in files:
             p_file = Path(root)/file
-            name_normalize = f"{
-                normalize(p_file.name[0:-len(p_file.suffix)])}{p_file.suffix}"
-            p_file.rename(Path(root)/name_normalize)
-            p_file = Path(root)/name_normalize
             for suff in dir_suff_dict:
                 if p_file.suffix.lower() in dir_suff_dict[suff]:
                     if p_file.suffix.lower() not in known_suff:
                         known_suff.append(p_file.suffix.lower())
-                    dir_img = cur_dir/suff
+                    dir_img = next_dir/suff
                     dir_img.mkdir(exist_ok=True)
-                    if suff != "Archives":
-                        try:
-                            p_file.rename(dir_img.joinpath(p_file.name))
-                        except FileExistsError:
-                            p_file.rename(dir_img.joinpath(
-                                f'{p_file.name.split(".")[0]}_c{p_file.suffix}'))
-                            print(f"Possibly a duplicate: {p_file.name}")
-                    else:
-                        dir_archive = cur_dir/suff / \
-                            p_file.name[0:-len(p_file.suffix)]
-                        dir_archive.mkdir(exist_ok=True)
-                        try:
-                            shutil.unpack_archive(p_file, dir_archive)
-                            os.remove(p_file)
-                            sort_func(dir_archive, v=1)
-                        except shutil.ReadError:
-                            os.remove(p_file)
-                            os.removedirs(dir_archive)
+                    try:
+                        p_file.rename(dir_img.joinpath(p_file.name))
+                    except FileExistsError:
+                        p_file.rename(dir_img.joinpath(
+                            f'{p_file.name.split(".")[0]}_c{p_file.suffix}'))
+                        print(f"Possibly a duplicate: {p_file.name}")
                 else:
                     if p_file.suffix.lower() not in all_suff:
                         all_suff.append(p_file.suffix.lower())
     for root, dirs, files in os.walk(path_dir):
         if files != []:
-            dir_img = Path(root)/"Other"
+            dir_img = Path(dst_path)/"Other"
             dir_img.mkdir(exist_ok=True)
             for file in files:
                 p_file = Path(root)/file
@@ -101,7 +60,7 @@ def sort_func(path_dir, v):
             except OSError:
                 continue
     if v == 0:
-        for root, dirs, files in os.walk(path_dir):
+        for root, dirs, files in os.walk(dst_path):
             if files != []:
                 print(f"{root}\\{files}")
         print(f"known extensions :{known_suff}")
@@ -109,17 +68,15 @@ def sort_func(path_dir, v):
         print(f"unknown extensions :{unknown_suff}")
 
 
-def sort(path):
+def sort(src_path, dst_path):
+    if not Path(dst_path). exists():
+        print(f'[!!!] Created Folder {dst_path}')
+        Path(dst_path).mkdir(exist_ok=True)
     try:
-        path_d = path
-        if not Path(path_d).exists():
+        if not Path(src_path).exists():
             print("[-] Folder does not exist")
         else:
-            sort_func(path_d, v=0)
-            print("[!] Sorting complete")
+            sort_func(src_path, dst_path, v=0)
+            print(f"[!] Sorting complete in folder {dst_path}")
     except IndexError:
         print("[-] Enter folder to sort !")
-
-# if __name__ == "__main__":
-#    path = 'E:\Example_Folder'
-#    sort(path)
