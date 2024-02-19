@@ -72,9 +72,25 @@ def handler_add_note(args):
     return result
 
 
-def createParser():
+def handler_del_note(args):
+    print("handler_del_note args: {args}")
+
+
+def handler_find_note(args):
+    print("handler_find_note args: {args}")
+
+
+def handler_sort_by_tag(args):
+    print("handler_sort_by_tag args: {args}")
+
+
+def handler_show_note(args):
+    print("handler_find_note args: {args}")
+
+
+def create_parser():
     parser = argparse.ArgumentParser(
-        prog="myhelper", description="You helper application."
+        prog="myhelper", description="You helper application.", exit_on_error=False
     )
 
     # parser_main = parser.add_parser()
@@ -129,6 +145,24 @@ def createParser():
         nargs="+",
     )
 
+    note_del_parser = subparser.add_parser("del", help="note delete record")
+    note_del_parser.set_defaults(func=handler_del_note)
+    note_del_parser.add_argument(dest="id", type=int)
+
+    note_find_parser = subparser.add_parser("find", help="note find tag in record")
+    note_find_parser.set_defaults(func=handler_find_note)
+    note_find_parser.add_argument(dest="tag", nargs="*", help="Search Note by tag")
+
+    note_sort_by_tag = subparser.add_parser(
+        "sort-tag", help="note sort by tag in record"
+    )
+    note_sort_by_tag.set_defaults(func=handler_sort_by_tag)
+    # note_sort_by_tag.add_argument(dest="sort_by_tag", help="Get notes sorted by tags")
+
+    note_show_parser = subparser.add_parser("show", help="Show All notes")
+    note_show_parser.set_defaults(func=handler_show_note)
+    # note_show_parser.add_argument(dest="tag", nargs="*", help="Search Note by tag")
+
     exit_parser.set_defaults(func=handler_exit)
 
     # exit_parser.add_argument(help)
@@ -172,14 +206,15 @@ def createParser():
     # note_parser = argparse.ArgumentParser(parents=[parent_parser])
     # note_parser.add_argument("note")
     # return parser
-    return parser.parse_args()
+    # return parser.parse_args()
+    return parser
 
 
 if __name__ == "__main__":
     # print(sys.argv)
 
     # parser = createParser()
-    args = createParser()
+    args = create_parser()
     print(f"args: {args}")
     print(f"args.command: {args.command}")
     # print(not args)
