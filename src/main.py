@@ -1,11 +1,12 @@
 import argparse
 import sys
-from lib.textc import textc
+from my_lib.textc import textc
 from parser_act import create_parser
 
 # phonebook
 # contact
 # addressbook
+
 
 # note-add -n ""
 # note-del id
