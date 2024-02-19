@@ -154,12 +154,14 @@ class Record:
         self.phones.remove(list(phones_to_remove)[0])
 
     def edit_phone(self, old_number, new_number):
-        if not Phone().is_valid(new_number):
-            raise ValueError('Invalid phone number format')
+        new_phone = Phone(new_number)
+        if not new_phone.is_valid(new_number):
+            raise ValueError("Invalid phone number format")
+
         found = False
         for phone in self.phones:
             if phone.value == old_number:
-                phone.value = new_number
+                phone.set_value(new_number)
                 found = True
                 break
 
@@ -170,8 +172,27 @@ class Record:
      
     def set_email(self, email):
         if not Email(email).is_valid(email):
-            raise ValueError('Invalid email format')
+            raise ValueError("Invalid email format")
         self.email = Email(email)
+
+    def edit_first_name(self, new_first_name):
+        self.first_name.set_value(new_first_name)
+
+    def edit_last_name(self, new_last_name):
+        self.last_name.set_value(new_last_name)
+        
+    def edit_birthday(self, new_birthday):
+        if new_birthday is not None and not Birthday(new_birthday).is_valid(new_birthday):
+            raise ValueError("Invalid birthday format")
+        self.birthday.set_value(new_birthday)
+
+    def edit_address(self, new_address):
+        self.address.address_string = new_address
+
+    def edit_email(self, new_email):
+        if new_email is not None and not Email(new_email).is_valid(new_email):
+            raise ValueError('Invalid email format')
+        self.email.set_value(new_email)
 
     def __str__(self):
         return (
@@ -179,9 +200,21 @@ class Record:
             f"phones: {'; '.join(p.value for p in self.phones)}, "
             f"Birthday: {self.birthday}, Email: {self.email}, Address: {self.address}"
         )
+
+
     
 
 record = Record('John', 'Smith', '1987-01-23', '123 Main St', 'johnsmith@gmail.com')
 record.add_phone('123-456-7890')
 record.add_phone('555-456-7783')
+print(record)
+
+record.edit_first_name('Beth')
+record.edit_last_name('Gibbons')
+record.edit_phone('123-456-7890', '123-456-6666')
+record.edit_phone('555-456-7783', '345-456-0910')
+record.edit_birthday('1965-01-04')
+record.edit_address('456 Elm St')
+record.edit_email('beth.gibbons@gmail.com') 
+
 print(record)
