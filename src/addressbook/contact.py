@@ -1,11 +1,6 @@
+from edit_record import Record
+
 class Contact:
-    def __init__(self):
-        self.first_name = None
-        self.last_name = None
-        self.birthday = None
-        self.address = None
-        self.email = None
-        self.phones = []
 
     def set_first_name(self, value):
         self.first_name = value

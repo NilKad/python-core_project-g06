@@ -8,7 +8,7 @@ from edit_record import FirstName, LastName, Email, Phone, Birthday, Address, Re
 class Contacts:
     def __init__(self):
         self.contacts = {}
-        self.current_id = 1  # Unique ID for each contact
+        self.current_id = 1
 
     def add(self, data):
         first_name = data.get('first_name')
@@ -18,10 +18,7 @@ class Contacts:
         email = data.get('email')
         phones = data.get('phones', [])
 
-        contact = Record(first_name, last_name, birthday, address, email)
-        for phone in phones:
-            contact.add_phone(phone)
-
+        contact = Record(first_name, last_name, address, email, birthday, phones, contact_id=self.current_id)
         contact_id = self.current_id
         self.current_id += 1
         self.contacts[contact_id] = contact
