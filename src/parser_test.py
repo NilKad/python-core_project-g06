@@ -59,7 +59,7 @@ def handler_add_note(args):
     print(f"result: {result}")
 
     return result
-def handler_
+# def handler_
 
 def createParser():
     parser = argparse.ArgumentParser(

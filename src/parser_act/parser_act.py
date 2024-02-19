@@ -223,26 +223,19 @@ def create_parser():
     files_sort_parser = subparser.add_parser("filesort", help="sort files help")
     exit_parser = subparser.add_parser("exit", help="Exit from programm")
 
-    # note_parser.set_defaults(func=note_parser.print_help())
-
     subparser = note_parser_group.add_subparsers(
         help="sub note command help", dest="command"
     )
 
     note_add_parser = subparser.add_parser("add", help="note add help")
-    # note_add_parser.set_defaults(func=note_add_parser.print_help())
     note_add_parser.set_defaults(func=handler_add_note)
     note_add_parser.add_argument(
         "-s",
         "--subject",
-        # required=True,
         dest="subject",
         type=str,
         # type=note_in_title,
         help=textc("Input %(dest)s for note", "RED"),
-        # default="",
-        # default=note_in_title,
-        # metavar="ADD--AAA",
     )
     note_add_parser.add_argument(
         "-c",
@@ -256,9 +249,7 @@ def create_parser():
     note_add_parser.add_argument(
         "-t",
         "--tags",
-        # required=True,
         dest="tags",
-        # default="",
         type=str,
         help="\033[31mInput %(dest)s for note\033[0m",
         nargs="+",
