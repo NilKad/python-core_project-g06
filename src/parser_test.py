@@ -2,7 +2,7 @@ import argparse
 import shutil
 from unittest import result
 
-from lib.textc import textc
+from my_lib.textc import textc
 
 #!!!!!!!!!!!!!!!
 # size_console = shutil.get_terminal_size()

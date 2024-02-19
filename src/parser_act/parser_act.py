@@ -3,7 +3,7 @@ from operator import concat
 import shutil
 import sys
 
-from lib.textc import textc
+from my_lib.textc import textc
 
 # from ..lib.textc import textc
 
