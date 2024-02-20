@@ -159,6 +159,41 @@ def handler_add_contact(args):
     return res
 
 
+def handler_edit_contact(args):
+    print(f"handler_del_note args: {args}")
+    req_params = ["id"]
+    excl_params = ["command", "func"]
+    excl_params2 = ["command", "func", "id"]
+    variables_in_set = ["phone"]
+
+    is_skeep_addition = False
+    res = vars(args)
+    # проверка на наличие хотя бы одного введенного аргумента,
+    # если есть, то не запускать на ввод их интерактивно
+    for key, value in res.items():
+        if key not in excl_params2 and (
+            (isinstance(value, set) and len(value) > 0) or value
+        ):
+            is_skeep_addition = True
+            break
+    if not is_skeep_addition:
+        res = addition_input(args, req_params, variables_in_set)
+
+    # new_res = list(filter(lambda key, values: values != "", vars(res)))
+    # удаление пустых аргументов
+    new_res = {}
+    for key, value in res.items():
+        # print(new_res, type(new_res))
+        if (
+            key in excl_params
+            or (value == "" or not value)
+            or (isinstance(value, set) and len(value) == 0)
+        ):
+            continue
+        new_res[key] = value
+    return new_res
+
+
 def handler_del_contact(args):
     print(f"handler_del_contact args: {args}")
 
@@ -171,40 +206,48 @@ def handler_find_contact(args):
     print(f"handler_find_contact args: {args}")
 
 
+# def handler_birthday_contact(args):
+#     print(f"handler_birthday_contact args: {args}")
+
+
+# def handler_set_firstname_contact(args):
+#     print(f"handler_set_firstname_contact args: {args}")
+
+
+# def handler_set_lastname_contact(args):
+#     print(f"handler_set_lastname_contact args: {args}")
+
+
+# def handler_set_birthday_contact(args):
+#     print(f"handler_birthday_firstname_contact args: {args}")
+
+
+# def handler_set_address_contact(args):
+#     print(f"handler_set_address_contact args: {args}")
+
+
+# def handler_set_email_contact(args):
+#     print(f"handler_set_email_contact args: {args}")
+
+
+def handler_phone_add_contact(args):
+    print(f"handler_add_phone_contact args: {args}")
+
+
+def handler_phone_edit_contact(args):
+    print(f"handler_edit_phone_contact args: {args}")
+
+
+def handler_phone_del_contact(args):
+    print(f"handler_del_phone_contact args: {args}")
+
+
 def handler_birthday_contact(args):
     print(f"handler_birthday_contact args: {args}")
 
 
-def handler_set_firstname_contact(args):
-    print(f"handler_set_firstname_contact args: {args}")
-
-
-def handler_set_lastname_contact(args):
-    print(f"handler_set_lastname_contact args: {args}")
-
-
-def handler_set_birthday_contact(args):
-    print(f"handler_birthday_firstname_contact args: {args}")
-
-
-def handler_set_address_contact(args):
-    print(f"handler_set_address_contact args: {args}")
-
-
-def handler_set_email_contact(args):
-    print(f"handler_set_email_contact args: {args}")
-
-
-def handler_add_phone_contact(args):
-    print(f"handler_add_phone_contact args: {args}")
-
-
-def handler_edit_phone_contact(args):
-    print(f"handler_edit_phone_contact args: {args}")
-
-
-def handler_del_phone_contact(args):
-    print(f"handler_del_phone_contact args: {args}")
+def handler_sort_files(args):
+    print(f"handler_sort_files args: {args}")
 
 
 def create_parser():
@@ -309,7 +352,7 @@ def create_parser():
     subparser = contact_parser_group.add_subparsers(
         help="sub contact command help", dest="command"
     )
-    contact_add_parser = subparser.add_parser("add", help="contact add help")
+    contact_add_parser = subparser.add_parser("add", help="Contact add help")
     contact_add_parser.set_defaults(func=handler_add_contact)
     contact_add_parser.add_argument(
         "-f",
@@ -330,7 +373,7 @@ def create_parser():
         "--phone",
         dest="phones",
         type=str,
-        nargs='+',
+        nargs="+",
         help=textc("Input %(dest)s for contact", "RED"),
     )
     contact_add_parser.add_argument(
@@ -340,41 +383,132 @@ def create_parser():
         type=str,
         help=textc("Input %(dest)s for contact", "RED"),
     )
-    
+    contact_add_parser.add_argument(
+        "-b",
+        "--birthday",
+        dest="birthday",
+        type=str,
+        help=textc("Input %(dest)s for contact in format 2022-02-02", "RED"),
+    )
+
+    contact_edit_parser = subparser.add_parser("set", help="contact add help")
+
+    contact_edit_parser.set_defaults(func=handler_edit_contact)
+    contact_edit_parser.add_argument("id", type=int, help="contact ID")
+    contact_edit_parser.add_argument(
+        "-f",
+        "--firstname",
+        dest="first_name",
+        type=str,
+        help=textc("Input %(dest)s for contact", "RED"),
+    )
+    contact_edit_parser.add_argument(
+        "-l",
+        "--lastname",
+        dest="last_name",
+        type=str,
+        help=textc("Input %(dest)s for contact", "RED"),
+    )
+    contact_edit_parser.add_argument(
+        "-p",
+        "--phone",
+        dest="phones",
+        type=str,
+        nargs="+",
+        help=textc("Input %(dest)s for contact", "RED"),
+    )
+    contact_edit_parser.add_argument(
+        "-a",
+        "--address",
+        dest="address",
+        type=str,
+        help=textc("Input %(dest)s for contact", "RED"),
+    )
+    contact_edit_parser.add_argument(
+        "-b",
+        "--birthday",
+        dest="birthday",
+        type=str,
+        help=textc("Input %(dest)s for contact in format 2022-02-02", "RED"),
+    )
+
+    contact_phone_group = subparser.add_parser("phone", help="contact phone help")
+    subparser_phone = contact_phone_group.add_subparsers(
+        help="sub phone in contact command help", dest="command"
+    )
+
+    contact_phone_add_parser = subparser_phone.add_parser(
+        "add", help="Add phone(s) to Contact"
+    )
+    contact_phone_add_parser.set_defaults(func=handler_phone_add_contact)
+    contact_phone_add_parser.add_argument("id", type=int, help="contact ID")
+    contact_phone_add_parser.add_argument(
+        "-p",
+        "--phone",
+        dest="phones",
+        type=str,
+        nargs="+",
+        help=textc("Input %(dest)s for contact", "RED"),
+    )
+
+    contact_phone_edit_parser = subparser.add_parser(
+        "edit", help="Edit phone(s) to Contact"
+    )
+    contact_phone_edit_parser.set_defaults(func=handler_phone_add_contact)
+    contact_phone_edit_parser.add_argument("-id", type=int, help="contact ID")
+    contact_phone_edit_parser.add_argument(
+        "-p",
+        # nargs=2,
+        dest="phones",
+        type=str,
+        help=textc("Input old_phone and new_phone for contact by id", "RED"),
+    )
+
+    contact_phone_del_parser = subparser.add_parser(
+        "del", help="Delete phone to Contact"
+    )
+    contact_phone_del_parser.set_defaults(func=handler_phone_add_contact)
+    contact_phone_del_parser.add_argument("-id", type=int, help="contact ID")
+    contact_phone_del_parser.add_argument(
+        "-p",
+        # nargs=2,
+        # dest="phones",
+        type=str,
+        help=textc("Input %(dest)s for delete in contact", "RED"),
+    )
+
+    contact_find_parser = subparser.add_parser("find", help="Contact find")
+    contact_find_parser.set_defaults(func=handler_find_contact)
+    contact_find_parser.add_argument(
+        "string", type=str, help="Input %(dest)s for search in contacts"
+    )
+
+    contact_find_by_id_parser = subparser.add_parser(
+        "findbyid", help="Contact find by id"
+    )
+    contact_find_by_id_parser.set_defaults(func=handler_find_by_id_contact)
+    contact_find_by_id_parser.add_argument("id", type=int, help="contact ID")
+
+    contact_birthday_parser = subparser.add_parser(
+        "birthday", help="Find birthday in Contacts"
+    )
+    contact_birthday_parser.set_defaults(func=handler_birthday_contact)
+    contact_birthday_parser.add_argument(
+        "date",
+        type=str,
+        nargs="+",
+        help="Input %(dest)s birthday for search in contacts",
+    )
+
+    files_sort_parser.set_defaults(func=handler_sort_files)
+    files_sort_parser.add_argument(
+        "-s", type=str, help="Source path with files for sorting"
+    )
+    files_sort_parser.add_argument(
+        "-d", type=str, help="Destination path for save files"
+    )
 
     exit_parser.set_defaults(func=handler_exit)
-
-    # exit_parser.add_argument(help)
-
-    # print("-----------------")
-    # print(parser.format_help())
-    # print(textc("dsdadsad", "RED"))
-    # print("\033[38;5;245m@@@@@@@@@@@@@@@@@\033[0m")
-    # print("\033[250m1234\033[0m")
-
-    # note_add_parser = note_parser.add_subparsers(help="L3 subparser", dest="command")
-    # note_add_parser.add_parser("add", help="note add help")
-    # note_add_parser.set_defaults(func=handler_note)
-    # note_add_parser.add_argument("test")
-
-    # note_add_parser =
-    # contact_parser = subparser.add_parser("contact", help="contact help")
-    # contact_parser.add_argument(
-    #     "-fn",
-    #     "--FirstName",
-    #     default="",
-    #     dest="first_name",
-    #     type=str,
-    #     help="Input First name",
-    # )
-    # contact_parser.add_argument(
-    #     "-ln",
-    #     "--LastName",
-    #     default="",
-    #     dest="last_name",
-    #     type=str,
-    #     help="Input Last name",
-    # )
 
     # parser.add_argument("-n", "--name", nargs="?", help="This is the 'a' variable")
     # parser.add_argument("note", help="This is the note ")
