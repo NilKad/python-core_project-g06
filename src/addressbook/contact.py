@@ -151,6 +151,7 @@ class Record:
         self.address = Address(address) if address else None
         self.email = Email(email) if email else None
         self.phones = []
+        self.contact_id = [1]
 
     def add_phone(self, phone):
         self.phones = [Phone(p) for p in phone]

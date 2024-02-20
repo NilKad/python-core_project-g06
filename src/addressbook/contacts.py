@@ -7,7 +7,7 @@ from contact import FirstName, LastName, Email, Phone, Birthday, Address, Record
 class Contacts:
     def __init__(self):
         self.contacts = {}
-        self.current_id = 1
+        self.current_id = [1]
 
     def add(self, data):
         contact_id = self.current_id
@@ -20,9 +20,10 @@ class Contacts:
         email = data.get('email')
         phones = data.get('phones', [])
 
-        contact = Record(first_name, last_name, address, email, birthday, phones, contact_id=contact_id)
-        self.contacts[contact_id] = contact
-        return contact_id
+        contact = Record(first_name, last_name, address, email, birthday, phones, contact_id=self.current_id[0])
+        self.current_id[0] += 1
+        self.contacts.append((self.current_id[0], contact))
+        return self.current_id[0]
     
     def delete(self, contact_id):
         if contact_id in self.contacts:
