@@ -2,6 +2,7 @@ import argparse
 from operator import concat
 import shutil
 import sys
+from ctrl_notes import note_add, note_del, note_find, note_findsubject, note_set, note_show, note_sort_by_tag
 
 from my_lib.textc import textc
 
@@ -71,11 +72,12 @@ def handler_add_note(args):
 
     res = addition_input(args, req_params, variables_in_set)
     # print(f"____handler_add_note result: {result}")
-
+    res_ctrl = note_add(res)
+    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
     return res
 
 
-def handler_edit_note(args):
+def handler_set_note(args):
     print(f"handler_del_note args: {args}")
     req_params = ["id"]
     excl_params = ["command", "func"]
@@ -107,6 +109,8 @@ def handler_edit_note(args):
         ):
             continue
         new_res[key] = value
+    res_ctrl = note_set(new_res)
+    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
     return new_res
 
 
@@ -114,6 +118,8 @@ def handler_del_note(args):
     print(f"handler_del_note args: {args}")
     req_params = ["id"]
     res = addition_input(args, req_params)
+    res_ctrl = note_del(res)
+    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
     return res
 
 
@@ -122,6 +128,10 @@ def handler_find_note(args):
     req_params = ["tags"]
     variables_in_set = ["tags"]
     res = addition_input(args, req_params, variables_in_set)
+    
+    res_ctrl = note_find(res)
+    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+    
     return res
 
 
@@ -130,20 +140,30 @@ def handler_findsubject_note(args):
     req_params = ["subject"]
     variables_in_set = ["subject"]
     res = addition_input(args, req_params, variables_in_set)
+    
+    res_ctrl = note_findsubject(res)
+    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+    
     return res
 
 
 def handler_sort_by_tag_note(args):
     print(f"handler_sort_by_tag args: {args}")
     res = addition_input(args, [])
-
+    
+    res_ctrl = note_sort_by_tag(res)
+    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+    
     return res
 
 
 def handler_show_note(args):
     print(f"handler_find_note args: {args}")
     res = addition_input(args, [])
-
+    
+    res_ctrl = note_show(res)
+    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+    
     return res
 
 
@@ -160,7 +180,7 @@ def handler_add_contact(args):
 
 
 def handler_edit_contact(args):
-    print(f"handler_del_note args: {args}")
+    print(f"handler_edit_contact args: {args}")
     req_params = ["id"]
     excl_params = ["command", "func"]
     excl_params2 = ["command", "func", "id"]
@@ -204,30 +224,6 @@ def handler_find_by_id_contact(args):
 
 def handler_find_contact(args):
     print(f"handler_find_contact args: {args}")
-
-
-# def handler_birthday_contact(args):
-#     print(f"handler_birthday_contact args: {args}")
-
-
-# def handler_set_firstname_contact(args):
-#     print(f"handler_set_firstname_contact args: {args}")
-
-
-# def handler_set_lastname_contact(args):
-#     print(f"handler_set_lastname_contact args: {args}")
-
-
-# def handler_set_birthday_contact(args):
-#     print(f"handler_birthday_firstname_contact args: {args}")
-
-
-# def handler_set_address_contact(args):
-#     print(f"handler_set_address_contact args: {args}")
-
-
-# def handler_set_email_contact(args):
-#     print(f"handler_set_email_contact args: {args}")
 
 
 def handler_phone_add_contact(args):
@@ -299,8 +295,8 @@ def create_parser():
     )
 
     note_edit_parser = subparser.add_parser("edit", help="Edit Note")
-    note_edit_parser.set_defaults(func=handler_edit_note)
-    note_edit_parser.add_argument("id", type=int)
+    note_edit_parser.set_defaults(func=handler_set_note)
+    note_edit_parser.add_argument("-id", type=int)
     note_edit_parser.add_argument(
         "-s",
         "--subject",
