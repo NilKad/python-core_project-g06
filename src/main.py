@@ -1,38 +1,39 @@
 import os
-import pathlib
 import sys
 from my_lib.textc import textc
+from notes.notes import Notes
 from parser_act import create_parser
+from save_load.save_load import storage_load_file, storage_save_file
+
 
 my_storage = {}
-STORAGE_PATH = "data_storage.bin"
+my_storage_list = {Notes: "storage_notes.bin"}
 
 
-# t = os.path(STORAGE_PATH)
-print(f"STORAGE_PATH: {STORAGE_PATH}")
-# print(f"t: : {t}")
+def storage_init(stor_class, stor_path):
+    class_name = stor_class.__name__
+    my_storage[class_name] = {}
+    my_storage[class_name]["data"] = stor_class()
+    my_storage[class_name]["path"] = stor_path
 
 
 def storage_load():
-    if os.path.exists(STORAGE_PATH):
-        pass
-        try:
-            
-            pass
-        except Exception:
-            print(type(Exception))
+    for stor_class, stor_path in my_storage_list.items():
 
-    try:
-        pass
-        # STORAGE_PATH.ise
-    except:
-        print("!!!!!!!!!!!!!!! Exception")
-
-        pass
+        if os.path.exists(stor_path):
+            storage_init(stor_class, stor_path)
+            try:
+                storage_load_file(my_storage[stor_class.__name__])
+            except Exception:
+                print("!!!Error load. Save New structore")
+                storage_save_file(my_storage[stor_class.__name__])
+                print(type(Exception))
+        else:
+            storage_init(stor_class, stor_path)
+            storage_save_file(my_storage[stor_class.__name__])
 
 
 def main():
-    # pass
     storage_load()
     parser_main = create_parser()
     # args.parse_args(["note", "-h"])
