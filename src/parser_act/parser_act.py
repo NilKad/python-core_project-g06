@@ -2,9 +2,27 @@ import argparse
 from operator import concat
 import shutil
 import sys
-from ctrl_notes import note_add, note_del, note_find, note_findsubject, note_set, note_show, note_sort_by_tag
+from ctrl_contacts import (
+    contact_add,
+    contact_del,
+    contact_find,
+    contact_phone_add,
+    contact_phone_del,
+    contact_phone_edit,
+    contact_set,
+)
+from ctrl_notes import (
+    note_add,
+    note_del,
+    note_find,
+    note_findsubject,
+    note_set,
+    note_show,
+    note_sort_by_tag,
+)
 
 from my_lib.textc import textc
+from sort_files.sort_files import sort_func
 
 # from ..lib.textc import textc
 
@@ -128,10 +146,10 @@ def handler_find_note(args):
     req_params = ["tags"]
     variables_in_set = ["tags"]
     res = addition_input(args, req_params, variables_in_set)
-    
+
     res_ctrl = note_find(res)
     print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
-    
+
     return res
 
 
@@ -140,30 +158,33 @@ def handler_findsubject_note(args):
     req_params = ["subject"]
     variables_in_set = ["subject"]
     res = addition_input(args, req_params, variables_in_set)
-    
+
     res_ctrl = note_findsubject(res)
     print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
-    
+
     return res
 
 
+#############################################################################################################
+# методы принимают аргументы с распарсенной строки и вызывают соответствующий метод для выполнения действий #
+#############################################################################################################
 def handler_sort_by_tag_note(args):
     print(f"handler_sort_by_tag args: {args}")
     res = addition_input(args, [])
-    
+
     res_ctrl = note_sort_by_tag(res)
     print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
-    
+
     return res
 
 
 def handler_show_note(args):
-    print(f"handler_find_note args: {args}")
+    print(f"handler_show_note args: {args}")
     res = addition_input(args, [])
-    
+
     res_ctrl = note_show(res)
     print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
-    
+
     return res
 
 
@@ -176,10 +197,13 @@ def handler_add_contact(args):
     res = addition_input(args, req_params, variables_in_set)
     # print(f"____handler_add_note result: {result}")
 
+    res_ctrl = contact_add(res)
+    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+
     return res
 
 
-def handler_edit_contact(args):
+def handler_set_contact(args):
     print(f"handler_edit_contact args: {args}")
     req_params = ["id"]
     excl_params = ["command", "func"]
@@ -211,31 +235,78 @@ def handler_edit_contact(args):
         ):
             continue
         new_res[key] = value
+    res_ctrl = contact_set(new_res)
+    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+
     return new_res
 
 
 def handler_del_contact(args):
     print(f"handler_del_contact args: {args}")
+    req_params = ["id"]
+    res = addition_input(args, req_params)
+    res_ctrl = contact_del(res)
+    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+    return res
 
 
 def handler_find_by_id_contact(args):
     print(f"handler_find_by_id_contact args: {args}")
+    req_params = ["tags"]
+    res = addition_input(args, req_params)
+
+    res_ctrl = contact_find(res)
+    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+
+    return res
 
 
 def handler_find_contact(args):
     print(f"handler_find_contact args: {args}")
+    req_params = ["string"]
+    # variables_in_set = ["subject"]
+    res = addition_input(args, req_params)
+
+    res_ctrl = note_findsubject(res)
+    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+
+    return res
 
 
 def handler_phone_add_contact(args):
     print(f"handler_add_phone_contact args: {args}")
+    req_params = ["id", "phones"]
+    variables_in_set = ["phones"]
+    res = addition_input(args, req_params, variables_in_set)
+
+    res_ctrl = contact_phone_add(res)
+    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+
+    return res
 
 
 def handler_phone_edit_contact(args):
-    print(f"handler_edit_phone_contact args: {args}")
+    print(f"handler_add_phone_contact args: {args}")
+    req_params = ["id", "phones"]
+    variables_in_set = ["phones"]
+    res = addition_input(args, req_params, variables_in_set)
+
+    res_ctrl = contact_phone_edit(res)
+    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+
+    return res
 
 
 def handler_phone_del_contact(args):
     print(f"handler_del_phone_contact args: {args}")
+    req_params = ["id", "phones"]
+    variables_in_set = ["phones"]
+    res = addition_input(args, req_params, variables_in_set)
+
+    res_ctrl = contact_phone_del(res)
+    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+
+    return res
 
 
 def handler_birthday_contact(args):
@@ -244,8 +315,20 @@ def handler_birthday_contact(args):
 
 def handler_sort_files(args):
     print(f"handler_sort_files args: {args}")
+    req_params = ["src", "dst"]
+    # variables_in_set = ["phones"]
+    res = addition_input(args, req_params)
+
+    res_ctrl = sort_func(res)
+    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+
+    return res
 
 
+#################################################################
+# конфиг парсера с описанием структуры, команд и параметров     #
+# каждая команда вызывает свой соответстыующий метод handler_   #
+#################################################################
 def create_parser():
     parser = argparse.ArgumentParser(
         prog="myhelper", description="You helper application.", exit_on_error=False
@@ -389,7 +472,7 @@ def create_parser():
 
     contact_edit_parser = subparser.add_parser("set", help="contact add help")
 
-    contact_edit_parser.set_defaults(func=handler_edit_contact)
+    contact_edit_parser.set_defaults(func=handler_set_contact)
     contact_edit_parser.add_argument("id", type=int, help="contact ID")
     contact_edit_parser.add_argument(
         "-f",
@@ -447,7 +530,7 @@ def create_parser():
         help=textc("Input %(dest)s for contact", "RED"),
     )
 
-    contact_phone_edit_parser = subparser.add_parser(
+    contact_phone_edit_parser = subparser_phone.add_parser(
         "edit", help="Edit phone(s) to Contact"
     )
     contact_phone_edit_parser.set_defaults(func=handler_phone_add_contact)
@@ -460,7 +543,7 @@ def create_parser():
         help=textc("Input old_phone and new_phone for contact by id", "RED"),
     )
 
-    contact_phone_del_parser = subparser.add_parser(
+    contact_phone_del_parser = subparser_phone.add_parser(
         "del", help="Delete phone to Contact"
     )
     contact_phone_del_parser.set_defaults(func=handler_phone_add_contact)
@@ -468,7 +551,7 @@ def create_parser():
     contact_phone_del_parser.add_argument(
         "-p",
         # nargs=2,
-        # dest="phones",
+        dest="phones",
         type=str,
         help=textc("Input %(dest)s for delete in contact", "RED"),
     )
@@ -490,32 +573,32 @@ def create_parser():
     )
     contact_birthday_parser.set_defaults(func=handler_birthday_contact)
     contact_birthday_parser.add_argument(
-        "date",
+        # "-date",
+        # "-",
         type=str,
+        dest="birthday",
         nargs="+",
         help="Input %(dest)s birthday for search in contacts",
     )
 
     files_sort_parser.set_defaults(func=handler_sort_files)
     files_sort_parser.add_argument(
-        "-s", type=str, help="Source path with files for sorting"
+        "-s",
+        type=str,
+        metavar="source path",
+        dest="src",
+        help="Source path with files for sorting",
     )
     files_sort_parser.add_argument(
-        "-d", type=str, help="Destination path for save files"
+        "-d",
+        type=str,
+        dest="dst",
+        metavar="Destination path",
+        help="Destination path for save files",
     )
 
     exit_parser.set_defaults(func=handler_exit)
 
-    # parser.add_argument("-n", "--name", nargs="?", help="This is the 'a' variable")
-    # parser.add_argument("note", help="This is the note ")
-
-    # parent_parser = argparse.ArgumentParser(add_help=False)
-    # parent_parser.add_argument("--parrent", type=int)
-
-    # note_parser = argparse.ArgumentParser(parents=[parent_parser])
-    # note_parser.add_argument("note")
-    # return parser
-    # return parser.parse_args()
     return parser
 
 
