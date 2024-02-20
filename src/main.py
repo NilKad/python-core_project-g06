@@ -1,45 +1,44 @@
-import argparse
+import os
+import pathlib
 import sys
 from my_lib.textc import textc
 from parser_act import create_parser
 
-# phonebook
-# contact
-# addressbook
+my_storage = {}
+STORAGE_PATH = "data_storage.bin"
 
 
-# note-add -n ""
-# note-del id
-# note-add
-# note-add
-# note-add
+# t = os.path(STORAGE_PATH)
+print(f"STORAGE_PATH: {STORAGE_PATH}")
+# print(f"t: : {t}")
 
 
-# sort-files
+def storage_load():
+    if os.path.exists(STORAGE_PATH):
+        pass
+        try:
+            
+            pass
+        except Exception:
+            print(type(Exception))
 
-# todo
+    try:
+        pass
+        # STORAGE_PATH.ise
+    except:
+        print("!!!!!!!!!!!!!!! Exception")
 
-
-# import contacts
-
-# from contact import Contacts
-
-
-# print(dir(contacts))
-
-# from contacts import Contacts
-# from contacts import Contacts
-# from contacts import *
-# import contacts
+        pass
 
 
 def main():
     # pass
+    storage_load()
     parser_main = create_parser()
     # args.parse_args(["note", "-h"])
 
     # create_parser()
-    while True:
+    while False:
         command_input = input("Input command: ")
 
         if command_input == "":
@@ -50,7 +49,7 @@ def main():
             parser_res = parser_main.parse_args(command_split)
             print(textc(f"----- main args: {parser_res}", "GREEN"))
             result_dict = parser_res.func(parser_res)
-            print(textc(f'result_dict: {result_dict}', "YELLOW"))
+            print(textc(f"result_dict: {result_dict}", "YELLOW"))
         except KeyboardInterrupt:
             print("--------KeyboardInterrupt--------Exception, e:")
             sys.exit()
