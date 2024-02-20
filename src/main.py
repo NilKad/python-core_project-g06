@@ -1,45 +1,45 @@
-import argparse
+import os
 import sys
 from my_lib.textc import textc
+from notes.notes import Notes
 from parser_act import create_parser
-
-# phonebook
-# contact
-# addressbook
+from save_load.save_load import storage_load_file, storage_save_file
 
 
-# note-add -n ""
-# note-del id
-# note-add
-# note-add
-# note-add
+my_storage = {}
+my_storage_list = {Notes: "storage_notes.bin"}
 
 
-# sort-files
-
-# todo
-
-
-# import contacts
-
-# from contact import Contacts
+def storage_init(stor_class, stor_path):
+    class_name = stor_class.__name__
+    my_storage[class_name] = {}
+    my_storage[class_name]["data"] = stor_class()
+    my_storage[class_name]["path"] = stor_path
 
 
-# print(dir(contacts))
+def storage_load():
+    for stor_class, stor_path in my_storage_list.items():
 
-# from contacts import Contacts
-# from contacts import Contacts
-# from contacts import *
-# import contacts
+        if os.path.exists(stor_path):
+            storage_init(stor_class, stor_path)
+            try:
+                storage_load_file(my_storage[stor_class.__name__])
+            except Exception:
+                print("!!!Error load. Save New structore")
+                storage_save_file(my_storage[stor_class.__name__])
+                print(type(Exception))
+        else:
+            storage_init(stor_class, stor_path)
+            storage_save_file(my_storage[stor_class.__name__])
 
 
 def main():
-    # pass
+    storage_load()
     parser_main = create_parser()
     # args.parse_args(["note", "-h"])
 
     # create_parser()
-    while True:
+    while False:
         command_input = input("Input command: ")
 
         if command_input == "":
@@ -50,7 +50,7 @@ def main():
             parser_res = parser_main.parse_args(command_split)
             print(textc(f"----- main args: {parser_res}", "GREEN"))
             result_dict = parser_res.func(parser_res)
-            print(textc(f'result_dict: {result_dict}', "YELLOW"))
+            print(textc(f"result_dict: {result_dict}", "YELLOW"))
         except KeyboardInterrupt:
             print("--------KeyboardInterrupt--------Exception, e:")
             sys.exit()
