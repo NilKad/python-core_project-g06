@@ -10,19 +10,20 @@ class Contacts:
         self.current_id = 1
 
     def add(self, data):
+        contact_id = self.current_id
+        self.current_id += 1
+
         first_name = data.get('first_name')
         last_name = data.get('last_name')
         address = data.get('address')
         birthday = data.get('birthday')
         email = data.get('email')
-        phones = set(data.get('phones', []))
+        phones = data.get('phones', [])
 
-        contact = Record(first_name, last_name, address, email, birthday, phones, contact_id=self.current_id)
-        contact_id = self.current_id
-        self.current_id += 1
+        contact = Record(first_name, last_name, address, email, birthday, phones, contact_id=contact_id)
         self.contacts[contact_id] = contact
         return contact_id
-
+    
     def delete(self, contact_id):
         if contact_id in self.contacts:
             del self.contacts[contact_id]
@@ -48,7 +49,7 @@ class Contacts:
 
         if not dates:
             # Scenario 1: No parameters provided
-            today_date = datetime.now().timetuple().tm_yday
+            today_date = datetime.now().date().timetuple().tm_yday
             upcoming_birthdays_list.extend(
                 (contact_id, contact)
                 for contact_id, contact in self.contacts.items()
@@ -58,7 +59,7 @@ class Contacts:
             for date in dates:
                 if isinstance(date, datetime):
                     # Scenario 2: Single date provided
-                    day_of_year = date.timetuple().tm_yday
+                    day_of_year = date.date().timetuple().tm_yday
                     upcoming_birthdays_list.extend(
                         (contact_id, contact)
                         for contact_id, contact in self.contacts.items()
@@ -70,6 +71,6 @@ class Contacts:
                     upcoming_birthdays_list.extend(
                         (contact_id, contact)
                         for contact_id, contact in self.contacts.items()
-                        if contact.birthday and start_date.timetuple().tm_yday <= contact.birthday.value.timetuple().tm_yday <= end_date.timetuple().tm_yday
+                        if contact.birthday and start_date.date().timetuple().tm_yday <= contact.birthday.value.timetuple().tm_yday <= end_date.date().timetuple().tm_yday
                     )
         return upcoming_birthdays_list
