@@ -39,7 +39,7 @@ def main():
     # args.parse_args(["note", "-h"])
 
     # create_parser()
-    while False:
+    while True:
         command_input = input("Input command: ")
 
         if command_input == "":
