@@ -10,7 +10,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'python-core_project-g06=src.personal_assistant_bot:main',
+            'python-core_project-g06=src.main:main',
         ],
     },
 )
