@@ -1,7 +1,12 @@
 import os
 from contacts.contacts import Contacts
 from notes.notes import Notes
-from save_load.save_load import storage_load_file, storage_load_file_new, storage_save_file, storage_save_file_new
+from save_load.save_load import (
+    storage_load_file,
+    storage_load_file_new,
+    storage_save_file,
+    storage_save_file_new,
+)
 
 
 my_storage = {}
@@ -20,17 +25,13 @@ def get_storage_contacts():
 
 def storage_init(stor_class, stor_path):
     class_name = str(stor_class.__name__)
-    print(f"*******    type: {class_name}")
+    # print(f"*******    type: {class_name}")
     my_storage[class_name] = {}
     my_storage[class_name]["data"] = stor_class()
     my_storage[class_name]["path"] = stor_path
-    print(f"*******    my_storage: {my_storage[class_name]["data"].__dict__}")
+    # print(f"*******    my_storage: {my_storage[class_name]["data"].__dict__}")
     # print(f"*******    my_storage: {my_storage[class_name]["data"]['contacts']}")
-    
-    
-    
-    
-    
+
     # print(f"*******    data: {class_name['data']}")
 
 
@@ -49,12 +50,11 @@ def storage_load():
             storage_init(stor_class, stor_path)
             storage_save_file(my_storage[stor_class.__name__])
 
-
         # типа новая верси, тестировалась
         if os.path.exists(my_stor_contacts_path):
             # storage_init(stor_class, stor_path)
             try:
-                storage_load_file_new(my_stor_contacts, my_stor_contacts_path )
+                storage_load_file_new(my_stor_contacts, my_stor_contacts_path)
             except Exception:
                 print("!!!Error load. Save New structore")
                 storage_save_file_new(my_stor_contacts, my_stor_contacts_path)
@@ -62,4 +62,3 @@ def storage_load():
         else:
             # storage_init(stor_class, stor_path)
             storage_save_file_new(my_stor_contacts, my_stor_contacts_path)
-
