@@ -4,6 +4,7 @@ import shutil
 import sys
 from ctrl_contacts import (
     contact_add,
+    contact_birthday,
     contact_del,
     contact_find,
     contact_phone_add,
@@ -40,6 +41,7 @@ print(textc(f"sadadasd", "RED"))
 #############################################################################################################
 
 
+# Общий метод в котором мы вводим аргумменты() через input
 def addition_input(args, req_params, var_in_set=[]):
     args_dict = vars(args)
     new_args_dict = {}
@@ -81,12 +83,15 @@ def addition_input(args, req_params, var_in_set=[]):
     return new_args_dict
 
 
+# методы которые вызываются после парсинга строки, какой метод нужно вызвать прописано
+# в конфиге парсинга для каждой доступной команды из парсинга
 def handler_exit(args):
     print("!!! exit")
     print(args)
     sys.exit()
 
 
+# Для работы с app Notes
 def handler_add_note(args):
     # print(f"__handler_add_note args: {args}")
     req_params = ["subject", "content"]
@@ -190,11 +195,12 @@ def handler_show_note(args):
     return res
 
 
+# Для работы с app Contacts
 def handler_add_contact(args):
     print(f"handler_add_contact args: {args}")
-    req_params = ["content"]
+    req_params = ["first_name"]
     # excl_params = ["command", "func"]
-    variables_in_set = ["tags"]
+    variables_in_set = ["phones"]
 
     res = addition_input(args, req_params, variables_in_set)
     # print(f"____handler_add_note result: {result}")
@@ -313,8 +319,16 @@ def handler_phone_del_contact(args):
 
 def handler_birthday_contact(args):
     print(f"handler_birthday_contact args: {args}")
+    req_params = []
+    res = addition_input(args, req_params)
+
+    res_ctrl = contact_birthday(res)
+    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+
+    return res
 
 
+# Для работы с app SortFiles
 def handler_sort_files(args):
     print(f"handler_sort_files args: {args}")
     req_params = ["src", "dst"]
@@ -458,6 +472,13 @@ def create_parser():
         help=textc("Input %(dest)s for contact", "RED"),
     )
     contact_add_parser.add_argument(
+        "-e",
+        "--email",
+        dest="email",
+        type=str,
+        help=textc("Input %(dest)s for contact", "RED"),
+    )
+    contact_add_parser.add_argument(
         "-a",
         "--address",
         dest="address",
@@ -496,6 +517,13 @@ def create_parser():
         dest="phones",
         type=str,
         nargs="+",
+        help=textc("Input %(dest)s for contact", "RED"),
+    )
+    contact_edit_parser.add_argument(
+        "-e",
+        "--email",
+        dest="email",
+        type=str,
         help=textc("Input %(dest)s for contact", "RED"),
     )
     contact_edit_parser.add_argument(
@@ -575,7 +603,7 @@ def create_parser():
     )
     contact_birthday_parser.set_defaults(func=handler_birthday_contact)
     contact_birthday_parser.add_argument(
-        # "-date",
+        "-d",
         # "-",
         type=str,
         dest="birthday",
