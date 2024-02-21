@@ -52,7 +52,7 @@ class Contacts:
             if (
                 value in el.first_name.value.lower()
                 or value in el.last_name.value.lower()
-                or value in el.address.address_string.lower()
+                or value in el.address.value.lower()
                 or value in el.email.value.lower()
                 or el.is_contains_phone(value)
             ):

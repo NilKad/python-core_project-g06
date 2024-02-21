@@ -275,7 +275,7 @@ def handler_find_contact(args):
     # variables_in_set = ["subject"]
     res = addition_input(args, req_params)
 
-    res_ctrl = note_findsubject(res)
+    res_ctrl = contact_find(res)
     print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
     return res
@@ -287,6 +287,7 @@ def handler_phone_add_contact(args):
     variables_in_set = ["phones"]
     res = addition_input(args, req_params, variables_in_set)
 
+    res["id"] = int(res["id"])
     res_ctrl = contact_phone_add(res)
     print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
@@ -295,10 +296,11 @@ def handler_phone_add_contact(args):
 
 def handler_phone_edit_contact(args):
     print(f"handler_add_phone_contact args: {args}")
-    req_params = ["id", "phones"]
-    variables_in_set = ["phones"]
-    res = addition_input(args, req_params, variables_in_set)
+    req_params = ["id", "phone_src", "phone_dst"]
+    # variables_in_set = ["phones_dst"]
+    res = addition_input(args, req_params)
 
+    res["id"] = int(res["id"])
     res_ctrl = contact_phone_edit(res)
     print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
@@ -311,6 +313,7 @@ def handler_phone_del_contact(args):
     variables_in_set = ["phones"]
     res = addition_input(args, req_params, variables_in_set)
 
+    res["id"] = int(res["id"])
     res_ctrl = contact_phone_del(res)
     print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
@@ -561,7 +564,7 @@ def my_parser():
         "add", help="Add phone(s) to Contact"
     )
     contact_phone_add_parser.set_defaults(func=handler_phone_add_contact)
-    contact_phone_add_parser.add_argument("id", type=int, help="contact ID")
+    contact_phone_add_parser.add_argument("-id", type=int, help="contact ID")
     contact_phone_add_parser.add_argument(
         "-p",
         "--phone",
@@ -574,26 +577,34 @@ def my_parser():
     contact_phone_edit_parser = subparser_phone.add_parser(
         "edit", help="Edit phone(s) to Contact"
     )
-    contact_phone_edit_parser.set_defaults(func=handler_phone_add_contact)
+    contact_phone_edit_parser.set_defaults(func=handler_phone_edit_contact)
     contact_phone_edit_parser.add_argument("-id", type=int, help="contact ID")
     contact_phone_edit_parser.add_argument(
-        "-p",
+        "-s",
         # nargs=2,
-        dest="phones",
+        dest="phone_src",
         type=str,
-        help=textc("Input old_phone and new_phone for contact by id", "RED"),
+        help=textc("Input old_phone for contact by id", "RED"),
+    )
+    contact_phone_edit_parser.add_argument(
+        "-d",
+        # nargs=2,
+        dest="phone_dst",
+        type=str,
+        help=textc("Input new_phone for contact by id", "RED"),
     )
 
     contact_phone_del_parser = subparser_phone.add_parser(
         "del", help="Delete phone to Contact"
     )
-    contact_phone_del_parser.set_defaults(func=handler_phone_add_contact)
+    contact_phone_del_parser.set_defaults(func=handler_phone_del_contact)
     contact_phone_del_parser.add_argument("-id", type=int, help="contact ID")
     contact_phone_del_parser.add_argument(
         "-p",
         # nargs=2,
         dest="phones",
         type=str,
+        nargs="+",
         help=textc("Input %(dest)s for delete in contact", "RED"),
     )
 

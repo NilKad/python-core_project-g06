@@ -36,7 +36,7 @@ def contact_add(*args, **kwargs):
 def contact_find_by_id(*args, **kwargs):
     params, *_ = args
     res = stor_contacts["Contacts"]["data"].find_by_id(params)
-    storage_save_file(stor_contacts["Contacts"])
+    # storage_save_file(stor_contacts["Contacts"])
     stor_contacts["Contacts"]["data"].show_all([res])
     return res
 
@@ -52,28 +52,32 @@ def contact_set(*args, **kwargs):
 
 def contact_phone_add(*args, **kwargs):
     params, *_ = args
-    print(f"contact_add args: {args}")
-    print(f"contact_add args: {params}")
-    print(f"contact_add kwargs: {kwargs}")
+    find_contact = stor_contacts["Contacts"]["data"].find_by_id(params)
+    res = find_contact.add_phones(params)
+    storage_save_file(stor_contacts["Contacts"])
+    stor_contacts["Contacts"]["data"].show_all([res])
 
-    return "contact edit OK"
+    return res
 
 
 def contact_phone_edit(*args, **kwargs):
     params, *_ = args
-    print(f"contact_add args: {args}")
-    print(f"contact_add args: {params}")
-    print(f"contact_add kwargs: {kwargs}")
+    # print(f"contact_add args: {params}")
+    find_contact = stor_contacts["Contacts"]["data"].find_by_id(params)
+    res = find_contact.edit_phone(params)
+    storage_save_file(stor_contacts["Contacts"])
+    stor_contacts["Contacts"]["data"].show_all([res])
 
-    return "contact edit OK"
+    return res
 
 
 def contact_phone_del(*args, **kwargs):
     params, *_ = args
-    print(f"contact_add args: {args}")
     print(f"contact_add args: {params}")
-    print(f"contact_add kwargs: {kwargs}")
-
+    find_contact = stor_contacts["Contacts"]["data"].find_by_id(params)
+    res = find_contact.del_phone(params)
+    storage_save_file(stor_contacts["Contacts"])
+    stor_contacts["Contacts"]["data"].show_all([res])
     return "contact edit OK"
 
 
@@ -88,10 +92,14 @@ def contact_del(*args, **kwargs):
 
 def contact_find(*args, **kwargs):
     params, *_ = args
-    print(f"contact_add args: {args}")
+    search_string = params["string"]
     print(f"contact_add args: {params}")
-    print(f"contact_add kwargs: {kwargs}")
+    find_contact = stor_contacts["Contacts"]["data"].find(search_string)
+    # res = find_contact.edit_phone(params)
+    # storage_save_file(stor_contacts["Contacts"])
+    stor_contacts["Contacts"]["data"].show_all([find_contact])
 
+    return find_contact
     return "contact edit OK"
 
 
