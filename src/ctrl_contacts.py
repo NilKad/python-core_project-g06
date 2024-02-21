@@ -1,4 +1,7 @@
 # from contacts import birthday
+# from contacts.contacts import contacts
+from save_load.save_load import storage_save_file
+from storage_svc import get_storage_contacts
 
 # from main import get_storage_contacts
 
@@ -14,24 +17,37 @@
 
 # print(get_storage_contacts())
 # my_storage_conta
+stor_contacts = get_storage_contacts()
+# stor_data = stor_contacts["data"]
+# stor_path = stor_contacts["path"]
+
+# print("0000000000000000000000000")
+# print(stor_contacts)
 
 
 def contact_add(*args, **kwargs):
     params, *_ = args
-    print(f"contact_add args: {args}")
-    print(f"contact_add args: {params}")
-    print(f"contact_add kwargs: {kwargs}")
+    res = stor_contacts["Contacts"]["data"].add(params)
+    storage_save_file(stor_contacts["Contacts"])
+    stor_contacts["Contacts"]["data"].show_all([res])
+    return res
 
-    return "contact add OK"
+
+def contact_find_by_id(*args, **kwargs):
+    params, *_ = args
+    res = stor_contacts["Contacts"]["data"].find_by_id(params)
+    storage_save_file(stor_contacts["Contacts"])
+    stor_contacts["Contacts"]["data"].show_all([res])
+    return res
 
 
 def contact_set(*args, **kwargs):
     params, *_ = args
-    print(f"contact_add args: {args}")
-    print(f"contact_add args: {params}")
-    print(f"contact_add kwargs: {kwargs}")
-
-    return "contact edit OK"
+    find_contact = stor_contacts["Contacts"]["data"].find_by_id(params)
+    res = find_contact.update_all(params)
+    storage_save_file(stor_contacts["Contacts"])
+    stor_contacts["Contacts"]["data"].show_all([res])
+    return res
 
 
 def contact_phone_add(*args, **kwargs):
@@ -87,6 +103,15 @@ def contact_birthday(*args, **kwargs):
     # res = birthday(params)
     # print(f"result search birthday:\n {res}")
     # return res
+
+
+def contact_showall(*args, **kwargs):
+    params, *_ = args
+    for_out = stor_contacts["Contacts"]["data"].data
+    res = stor_contacts["Contacts"]["data"].show_all(for_out)
+    # storage_save_file(stor_contacts["Contacts"])
+    # stor_contacts["Contacts"]["data"].show_all([res])
+    return res
 
 
 def contact_show(*args, **kwargs):

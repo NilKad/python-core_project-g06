@@ -113,3 +113,8 @@ class Contact:
             if phone in el:
                 return True
         return False
+
+    def __str__(self):
+        res = f"{self.id}\t{self.first_name} {self.last_name}\t phones: { self.phones}\temail: {self.email} address: {self.address}\t birthday: {self.birthday} "
+        # res = f'{self.id}\t{self.first_name} {self.last_name}\t phones: {'; '.join(p.value for p in self.phones)}\temail: {self.email} address: {self.address}\t birthday: {self.birthday} '
+        return res

@@ -3,7 +3,8 @@ import datetime
 
 class Birthday:
     def __init__(self, value):
-        self.set_value(value)
+        # self.set_value(value)
+        self.value = value
 
     def is_valid(self, value):
 

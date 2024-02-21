@@ -9,6 +9,7 @@ from ctrl_contacts import (
     contact_phone_del,
     contact_phone_edit,
     contact_set,
+    contact_showall,
 )
 from ctrl_notes import (
     note_add,
@@ -211,7 +212,7 @@ def handler_add_contact(args):
 
 def handler_set_contact(args):
     print(f"handler_edit_contact args: {args}")
-    req_params = ["id"]
+    req_params = []
     excl_params = ["command", "func"]
     excl_params2 = ["command", "func", "id"]
     variables_in_set = ["phone"]
@@ -241,6 +242,7 @@ def handler_set_contact(args):
         ):
             continue
         new_res[key] = value
+    new_res["id"] = int(new_res["id"])
     res_ctrl = contact_set(new_res)
     print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
@@ -321,6 +323,17 @@ def handler_birthday_contact(args):
     res = addition_input(args, req_params)
 
     res_ctrl = contact_birthday(res)
+    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+
+    return res
+
+
+def handler_show_contact(args):
+    print(f"handler_show_all_contact args: {args}")
+    req_params = []
+    res = addition_input(args, req_params)
+
+    res_ctrl = contact_showall(res)
     print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
     return res
@@ -494,7 +507,7 @@ def my_parser():
     contact_edit_parser = subparser.add_parser("set", help="contact add help")
 
     contact_edit_parser.set_defaults(func=handler_set_contact)
-    contact_edit_parser.add_argument("id", type=int, help="contact ID")
+    contact_edit_parser.add_argument("-id", type=int, help="contact ID")
     contact_edit_parser.add_argument(
         "-f",
         "--firstname",
@@ -608,6 +621,17 @@ def my_parser():
         nargs="+",
         help="Input %(dest)s birthday for search in contacts",
     )
+
+    contact_birthday_parser = subparser.add_parser("show", help="Show all Contacts")
+    contact_birthday_parser.set_defaults(func=handler_show_contact)
+    # contact_birthday_parser.add_argument(
+    #     "-d",
+    #     # "-",
+    #     type=str,
+    #     dest="birthday",
+    #     nargs="+",
+    #     help="Input %(dest)s birthday for search in contacts",
+    # )
 
     files_sort_parser.set_defaults(func=handler_sort_files)
     files_sort_parser.add_argument(
