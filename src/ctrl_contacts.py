@@ -6,6 +6,7 @@ from main import my_storage
 from save_load.save_load import storage_save_file
 
 
+
 def contact_add(*args, **kwargs):
     params, *_ = args
     print(f"contact_add args: {args}")
@@ -79,6 +80,7 @@ def contact_birthday(*args, **kwargs):
     res = my_storage["Contacts"].birthday_find(params)
     print(f"result search birthday:\n {res}")
     return res
+
 
 
 def contact_show(*args, **kwargs):
