@@ -9,6 +9,7 @@ from ctrl_contacts import (
     contact_phone_del,
     contact_phone_edit,
     contact_set,
+    contact_showall,
 )
 from ctrl_notes import (
     note_add,
@@ -211,7 +212,7 @@ def handler_add_contact(args):
 
 def handler_set_contact(args):
     print(f"handler_edit_contact args: {args}")
-    req_params = ["id"]
+    req_params = []
     excl_params = ["command", "func"]
     excl_params2 = ["command", "func", "id"]
     variables_in_set = ["phone"]
@@ -241,6 +242,7 @@ def handler_set_contact(args):
         ):
             continue
         new_res[key] = value
+    new_res["id"] = int(new_res["id"])
     res_ctrl = contact_set(new_res)
     print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
@@ -273,7 +275,7 @@ def handler_find_contact(args):
     # variables_in_set = ["subject"]
     res = addition_input(args, req_params)
 
-    res_ctrl = note_findsubject(res)
+    res_ctrl = contact_find(res)
     print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
     return res
@@ -285,6 +287,7 @@ def handler_phone_add_contact(args):
     variables_in_set = ["phones"]
     res = addition_input(args, req_params, variables_in_set)
 
+    res["id"] = int(res["id"])
     res_ctrl = contact_phone_add(res)
     print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
@@ -293,10 +296,11 @@ def handler_phone_add_contact(args):
 
 def handler_phone_edit_contact(args):
     print(f"handler_add_phone_contact args: {args}")
-    req_params = ["id", "phones"]
-    variables_in_set = ["phones"]
-    res = addition_input(args, req_params, variables_in_set)
+    req_params = ["id", "phone_src", "phone_dst"]
+    # variables_in_set = ["phones_dst"]
+    res = addition_input(args, req_params)
 
+    res["id"] = int(res["id"])
     res_ctrl = contact_phone_edit(res)
     print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
@@ -309,6 +313,7 @@ def handler_phone_del_contact(args):
     variables_in_set = ["phones"]
     res = addition_input(args, req_params, variables_in_set)
 
+    res["id"] = int(res["id"])
     res_ctrl = contact_phone_del(res)
     print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
@@ -321,6 +326,17 @@ def handler_birthday_contact(args):
     res = addition_input(args, req_params)
 
     res_ctrl = contact_birthday(res)
+    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+
+    return res
+
+
+def handler_show_contact(args):
+    print(f"handler_show_all_contact args: {args}")
+    req_params = []
+    res = addition_input(args, req_params)
+
+    res_ctrl = contact_showall(res)
     print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
     return res
@@ -494,7 +510,7 @@ def my_parser():
     contact_edit_parser = subparser.add_parser("set", help="contact add help")
 
     contact_edit_parser.set_defaults(func=handler_set_contact)
-    contact_edit_parser.add_argument("id", type=int, help="contact ID")
+    contact_edit_parser.add_argument("-id", type=int, help="contact ID")
     contact_edit_parser.add_argument(
         "-f",
         "--firstname",
@@ -548,7 +564,7 @@ def my_parser():
         "add", help="Add phone(s) to Contact"
     )
     contact_phone_add_parser.set_defaults(func=handler_phone_add_contact)
-    contact_phone_add_parser.add_argument("id", type=int, help="contact ID")
+    contact_phone_add_parser.add_argument("-id", type=int, help="contact ID")
     contact_phone_add_parser.add_argument(
         "-p",
         "--phone",
@@ -561,26 +577,34 @@ def my_parser():
     contact_phone_edit_parser = subparser_phone.add_parser(
         "edit", help="Edit phone(s) to Contact"
     )
-    contact_phone_edit_parser.set_defaults(func=handler_phone_add_contact)
+    contact_phone_edit_parser.set_defaults(func=handler_phone_edit_contact)
     contact_phone_edit_parser.add_argument("-id", type=int, help="contact ID")
     contact_phone_edit_parser.add_argument(
-        "-p",
+        "-s",
         # nargs=2,
-        dest="phones",
+        dest="phone_src",
         type=str,
-        help=textc("Input old_phone and new_phone for contact by id", "RED"),
+        help=textc("Input old_phone for contact by id", "RED"),
+    )
+    contact_phone_edit_parser.add_argument(
+        "-d",
+        # nargs=2,
+        dest="phone_dst",
+        type=str,
+        help=textc("Input new_phone for contact by id", "RED"),
     )
 
     contact_phone_del_parser = subparser_phone.add_parser(
         "del", help="Delete phone to Contact"
     )
-    contact_phone_del_parser.set_defaults(func=handler_phone_add_contact)
+    contact_phone_del_parser.set_defaults(func=handler_phone_del_contact)
     contact_phone_del_parser.add_argument("-id", type=int, help="contact ID")
     contact_phone_del_parser.add_argument(
         "-p",
         # nargs=2,
         dest="phones",
         type=str,
+        nargs="+",
         help=textc("Input %(dest)s for delete in contact", "RED"),
     )
 
@@ -608,6 +632,17 @@ def my_parser():
         nargs="+",
         help="Input %(dest)s birthday for search in contacts",
     )
+
+    contact_birthday_parser = subparser.add_parser("show", help="Show all Contacts")
+    contact_birthday_parser.set_defaults(func=handler_show_contact)
+    # contact_birthday_parser.add_argument(
+    #     "-d",
+    #     # "-",
+    #     type=str,
+    #     dest="birthday",
+    #     nargs="+",
+    #     help="Input %(dest)s birthday for search in contacts",
+    # )
 
     files_sort_parser.set_defaults(func=handler_sort_files)
     files_sort_parser.add_argument(

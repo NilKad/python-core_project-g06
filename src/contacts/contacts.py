@@ -14,43 +14,59 @@ from contacts.contact import Contact
 
 class Contacts:
     def __init__(self):
-        self.contacts = []
+        self.data = []
         self.id = 0
 
-    def add(self, data):
-        id = self.id
-        self.id += 1
-        contact = Contact(data, id)
-        self.contacts.append(contact)
-        return contact
-
-    def delete(self, id):
-        for idx in range(len(self.contacts) + 1):
-            if self.contacts[idx].id == id:
-                self.contacts.pop(idx)
-                break
-
     def find_by_id(self, id):
-        for el in self.contacts:
+        id = id["id"]
+        for el in self.data:
             if el.id == id:
                 return el
         raise ValueError(f"{id} not found")
 
+    def add(self, data):
+        # id = self.id
+        contact = Contact(data, self.id)
+        self.data.append(contact)
+        self.id += 1
+        return contact
+
+    def set(self, data):
+        # id = self.id
+        # contact = Contact(data, self.id)
+        id = data["id"]
+        for_edit = self.find_by_id({"id": id})
+        res = for_edit.update_all(data)
+        # self.data.append(contact)
+        # self.id += 1
+        return res
+
+    def delete(self, id):
+        for idx in range(len(self.data) + 1):
+            if self.data[idx].id == id:
+                self.data.pop(idx)
+                break
+
     def find(self, value):
         res = []
-        for el in self.contacts:
+        for el in self.data:
             value = value.lower()
             if (
                 value in el.first_name.value.lower()
                 or value in el.last_name.value.lower()
-                or value in el.address.address_string.lower()
+                or value in el.address.value.lower()
                 or value in el.email.value.lower()
                 or el.is_contains_phone(value)
             ):
                 res.append(el)
         return res
 
-    def birthday_find(self, dates):
+    def show_all(self, data):
+        for el in data:
+            print(el)
+
+    def birthday(self, dates):
+
         dates_list = dates.split()
         upcoming_birthdays_list = []
         str_start = None
@@ -69,12 +85,12 @@ class Contacts:
 
         if str_end:
             date_end = datetime.strptime(str_end, "%Y-%m-%d").date()
-            for el in self.contacts:
+            for el in self.data:
                 date_el = datetime.strptime(el.birthday, "%Y-%m-%d").date()
                 if date_el >= date_start and date_el <= date_end:
                     upcoming_birthdays_list.append(el)
         else:
-            for el in self.contacts:
+            for el in self.data:
                 date_el = datetime.strptime(el.birthday, "%Y-%m-%d").date()
                 if date_el == date_start:
                     upcoming_birthdays_list.append(el)
