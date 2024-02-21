@@ -1,8 +1,5 @@
 # from ast import Raise
 from datetime import datetime
-
-
-=======
 from contacts.contact import Contact
 
 # from contact import Record
