@@ -1,3 +1,6 @@
+from contacts.contacts import birthday
+
+
 def contact_add(*args, **kwargs):
     params, *_ = args
     print(f"contact_add args: {args}")
@@ -15,6 +18,7 @@ def contact_set(*args, **kwargs):
 
     return "contact edit OK"
 
+
 def contact_phone_add(*args, **kwargs):
     params, *_ = args
     print(f"contact_add args: {args}")
@@ -23,6 +27,7 @@ def contact_phone_add(*args, **kwargs):
 
     return "contact edit OK"
 
+
 def contact_phone_edit(*args, **kwargs):
     params, *_ = args
     print(f"contact_add args: {args}")
@@ -30,6 +35,7 @@ def contact_phone_edit(*args, **kwargs):
     print(f"contact_add kwargs: {kwargs}")
 
     return "contact edit OK"
+
 
 def contact_phone_del(*args, **kwargs):
     params, *_ = args
@@ -58,25 +64,17 @@ def contact_find(*args, **kwargs):
     return "contact edit OK"
 
 
-def contact_findsubject(*args, **kwargs):
+def contact_birthday(*args, **kwargs):
     params, *_ = args
     print(f"contact_add args: {args}")
     print(f"contact_add args: {params}")
     print(f"contact_add kwargs: {kwargs}")
-
-    return "contact edit OK"
-
-
-def note_sort_by_tag(*args, **kwargs):
-    params, *_ = args
-    print(f"note_add args: {args}")
-    print(f"note_add args: {params}")
-    print(f"note_add kwargs: {kwargs}")
-
-    return "Note edit OK"
+    res = birthday(params)
+    print(f"result search birthday:\n {res}")
+    return res
 
 
-def note_show(*args, **kwargs):
+def contact_show(*args, **kwargs):
     params, *_ = args
     print(f"note_add args: {args}")
     print(f"note_add args: {params}")
