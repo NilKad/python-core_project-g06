@@ -2,70 +2,64 @@ from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 
-def search_contacts():
-    print("Function: search_contacts")
+from ctrl_contacts import (
+    contact_add,
+    contact_find_by_id,
+    contact_set,
+    contact_phone_add,
+    contact_phone_edit,
+    contact_phone_del,
+    contact_del,
+    contact_find,
+    contact_birthday,
+    contact_showall,
+    contact_show,
+)
 
+from ctrl_notes import (
+    note_add,
+    note_set,
+    note_del,
+    note_find,
+    note_findsubject,
+    note_sort_by_tag,
+    note_show,
+)
 
-def edit_contact():
-    print("Function: edit_contact")
-
-
-def delete_contact():
-    print("Function: delete_contact")
-
-
-def add_phone():
-    print("Function: add_phone")
-
-
-def edit_phone():
-    print("Function: edit_phone")
-
-
-def delete_phone():
-    print("Function: delete_phone")
-
-
-def add_note():
-    print("Function: add_note")
-
-
-def edit_note():
-    print("Function: edit_note")
-
-
-def delete_note():
-    print("Function: delete_note")
-
-
-# Словари функций для каждого уровня меню
 top_level_commands = {
     "contact": {
-        "add": add_contact,
-        "edit": edit_contact,
-        "delete": delete_contact,
-    },
-    "phone": {
-        "add": add_phone,
-        "edit": edit_phone,
-        "delete": delete_phone,
+        "add": contact_add,
+        "find_by_id": contact_find_by_id,
+        "set": contact_set,
+        "phone": {
+            "add": contact_phone_add,
+            "edit": contact_phone_edit,
+            "del": contact_phone_del,
+        },
+        "del": contact_del,
+        "find": contact_find,
+        "birthday": contact_birthday,
+        "showall": contact_showall,
+        "show": contact_show,
     },
     "notes": {
-        "add": add_note,
-        "edit": edit_note,
-        "delete": delete_note,
+        "add": note_add,
+        "set": note_set,
+        "del": note_del,
+        "find": note_find,
+        "findsubject": note_findsubject,
+        "sort_by_tag": note_sort_by_tag,
+        "show": note_show,
     }
 }
 
-# Создаем список всех команд для автодополнения
 all_commands = []
 for top_command, sub_commands in top_level_commands.items():
     all_commands.append(top_command)
-    all_commands.extend(
-        [f"{top_command} {sub_command}" for sub_command in sub_commands])
+    if isinstance(sub_commands, dict):
+        all_commands.extend([f"{top_command} {sub_command}" for sub_command in sub_commands])
 
 completer = WordCompleter(all_commands)
-
 
 def get_suggestions():
     while True:
@@ -89,7 +83,6 @@ def get_suggestions():
                 current_level()
             else:
                 print(f"Unknown command: {user_input}")
-
 
 if __name__ == "__main__":
     get_suggestions()
