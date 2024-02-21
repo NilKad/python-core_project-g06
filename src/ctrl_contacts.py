@@ -1,19 +1,10 @@
-# from contacts import birthday
+# from contacts.contacts import birthday_find
 
-# from main import get_storage_contacts
+import contacts.contacts as ctrl
 
-# from main import my_storage
+from main import my_storage
+from save_load.save_load import storage_save_file
 
-# import __main__
-
-# contacts_storage = my_storage['Contacts']
-# contacts_storage_data = contacts_storage['data']
-# global my_storage
-
-# print(__main__.my_storage)
-
-# print(get_storage_contacts())
-# my_storage_conta
 
 
 def contact_add(*args, **kwargs):
@@ -21,8 +12,10 @@ def contact_add(*args, **kwargs):
     print(f"contact_add args: {args}")
     print(f"contact_add args: {params}")
     print(f"contact_add kwargs: {kwargs}")
+    res = ctrl.add(params)
 
-    return "contact add OK"
+    storage_save_file(my_storage["Contacts"])
+    return res
 
 
 def contact_set(*args, **kwargs):
@@ -84,9 +77,10 @@ def contact_birthday(*args, **kwargs):
     print(f"contact_add args: {args}")
     print(f"contact_add args: {params}")
     print(f"contact_add kwargs: {kwargs}")
-    # res = birthday(params)
-    # print(f"result search birthday:\n {res}")
-    # return res
+    res = my_storage["Contacts"].birthday_find(params)
+    print(f"result search birthday:\n {res}")
+    return res
+
 
 
 def contact_show(*args, **kwargs):
