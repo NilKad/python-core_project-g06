@@ -7,6 +7,7 @@ from phone import Phone
 
 
 class Contact:
+    
     def __init__(self, args, id):
         self.__id = id
         self.__phones = set()

@@ -1,4 +1,4 @@
-from contacts.contacts import birthday
+# from contacts.contacts import birthday
 
 
 def contact_add(*args, **kwargs):
@@ -69,7 +69,7 @@ def contact_birthday(*args, **kwargs):
     print(f"contact_add args: {args}")
     print(f"contact_add args: {params}")
     print(f"contact_add kwargs: {kwargs}")
-    res = birthday(params)
+    # res = birthday(params)
     print(f"result search birthday:\n {res}")
     return res
 
