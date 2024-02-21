@@ -50,23 +50,29 @@ top_level_commands = {
         "findsubject": note_findsubject,
         "sort_by_tag": note_sort_by_tag,
         "show": note_show,
-    }
+    },
 }
 
 all_commands = []
 for top_command, sub_commands in top_level_commands.items():
     all_commands.append(top_command)
     if isinstance(sub_commands, dict):
-        all_commands.extend([f"{top_command} {sub_command}" for sub_command in sub_commands])
+        all_commands.extend(
+            [f"{top_command} {sub_command}" for sub_command in sub_commands]
+        )
 
 completer = WordCompleter(all_commands)
 
+
 def get_suggestions():
     while True:
-        user_input = prompt('Enter command: ', completer=completer,
-                            auto_suggest=AutoSuggestFromHistory())
+        user_input = prompt(
+            "Enter command: ",
+            completer=completer,
+            auto_suggest=AutoSuggestFromHistory(),
+        )
 
-        if user_input.lower() == 'exit':
+        if user_input.lower() == "exit":
             break
 
         parts = user_input.split()
@@ -83,6 +89,7 @@ def get_suggestions():
                 current_level()
             else:
                 print(f"Unknown command: {user_input}")
+
 
 if __name__ == "__main__":
     get_suggestions()
