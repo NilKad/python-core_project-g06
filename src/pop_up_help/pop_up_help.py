@@ -38,26 +38,34 @@ def delete_note():
     print("Function: delete_note")
 
 
-    # Словари функций для каждого элемента
-contact_commands = {
-    "search_contacts": search_contacts,
-    "edit_contact": edit_contact,
-    "delete_contact": delete_contact,
+# Словари функций для каждого уровня меню
+top_level_commands = {
+    "contact": {
+        "add": add_contact,
+        "edit": edit_contact,
+        "delete": delete_contact,
+    },
+    "phone": {
+        "add": add_phone,
+        "edit": edit_phone,
+        "delete": delete_phone,
+    },
+    "notes": {
+        "add": add_note,
+        "edit": edit_note,
+        "delete": delete_note,
+    }
 }
 
-phone_commands = {
-    "add_phone": add_phone,
-    "edit_phone": edit_phone,
-    "delete_phone": delete_phone,
-}
-notes_commands = {
-    "add_note": add_note,
-    "edit_note": edit_note,
-    "delete_note": delete_note,
+# Создаем список всех команд для автодополнения
+all_commands = []
+for top_command, sub_commands in top_level_commands.items():
+    all_commands.append(top_command)
+    all_commands.extend(
+        [f"{top_command} {sub_command}" for sub_command in sub_commands])
 
-}
-all_commands = list(contact_commands.keys()) + list(phone_commands.keys())
 completer = WordCompleter(all_commands)
+
 
 def get_suggestions():
     while True:
@@ -67,10 +75,21 @@ def get_suggestions():
         if user_input.lower() == 'exit':
             break
 
-        if user_input in contact_commands:
-            contact_commands[user_input]()
-        elif user_input in phone_commands:
-            phone_commands[user_input]()
+        parts = user_input.split()
+        current_level = top_level_commands
+
+        for part in parts:
+            if part in current_level:
+                current_level = current_level[part]
+            else:
+                print(f"Unknown command: {user_input}")
+                break
+        else:
+            if callable(current_level):
+                current_level()
+            else:
+                print(f"Unknown command: {user_input}")
+
 
 if __name__ == "__main__":
     get_suggestions()
