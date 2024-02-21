@@ -8,6 +8,20 @@ from save_load.save_load import (
     storage_save_file_new,
 )
 
+__structure_storage = {
+    "NameAPP1": {"data": "class", "path": "string"},
+    "NameAPP2": {"data": "class", "path": "string"},
+    # ........
+}
+__structure_class = {"id": int, "data": ["record1", "record2"]}
+
+__structure_storage_new = {
+    "NameAPP1": {"box": "class", "path": "string"},
+    "NameAPP2": {"box": "class", "path": "string"},
+    # ........
+}
+__structure_class_new = {"stor": {"id": int, "data_obj": ["record1", "record2"]}}
+
 
 my_storage = {}
 my_stor_contacts = Contacts()
@@ -18,21 +32,39 @@ my_storage_list = {Notes: "storage_notes.bin", Contacts: "storage_contacts.bin"}
 # print(my_storage)
 
 
-def get_storage_contacts():
+def get_stor_contacts():
     return my_storage
-    pass
+
+
+def get_stor_contacts_box():
+    return my_storage["Contacts"]
+
+
+def get_stor_contacts_data():
+    return my_storage["Contacts"].data
+
+
+def get_stor_contacts_path():
+    return my_storage["Contacts"].path
+
+
+def get_stor_note_box():
+    return my_storage["Note"]
+
+
+def get_stor_note_data():
+    return my_storage["Note"].data
+
+
+def get_stor_note_path():
+    return my_storage["Note"].path
 
 
 def storage_init(stor_class, stor_path):
     class_name = str(stor_class.__name__)
-    # print(f"*******    type: {class_name}")
     my_storage[class_name] = {}
     my_storage[class_name]["data"] = stor_class()
     my_storage[class_name]["path"] = stor_path
-    # print(f"*******    my_storage: {my_storage[class_name]["data"].__dict__}")
-    # print(f"*******    my_storage: {my_storage[class_name]["data"]['contacts']}")
-
-    # print(f"*******    data: {class_name['data']}")
 
 
 def storage_load():

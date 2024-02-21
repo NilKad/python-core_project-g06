@@ -1,74 +1,72 @@
 # from contacts import birthday
 # from contacts.contacts import contacts
 from save_load.save_load import storage_save_file
-from storage_svc import get_storage_contacts
+from stor_svc import (
+    get_stor_contacts,
+    get_stor_contacts_box,
+    get_stor_contacts_data,
+    get_stor_contacts_path,
+)
 
 
 # from main import my_storage
-from save_load.save_load import storage_save_file
+# from save_load.save_load import storage_save_file
 
-# import __main__
 
-# contacts_storage = my_storage['Contacts']
-# contacts_storage_data = contacts_storage['data']
-# global my_storage
+stor_contacts = get_stor_contacts()
 
-# print(__main__.my_storage)
 
-# print(get_storage_contacts())
-# my_storage_conta
-stor_contacts = get_storage_contacts()
-# stor_data = stor_contacts["data"]
-# stor_path = stor_contacts["path"]
+stor_contacts_box = get_stor_contacts_box
+stor_contacts_data = get_stor_contacts_data
+stor_contacts_path = get_stor_contacts_path
 
-# print("0000000000000000000000000")
-# print(stor_contacts)
+# stor_note_box = get_stor_note_box
+# stor_note_data = get_stor_note_data
+# stor_note_path = get_stor_note_path
 
 
 def contact_add(*args, **kwargs):
     params, *_ = args
-    res = stor_contacts["Contacts"]["data"].add(params)
-    storage_save_file(stor_contacts["Contacts"])
-    stor_contacts["Contacts"]["data"].show_all([res])
+    res = stor_contacts_data.add(params)
+    storage_save_file(stor_contacts_box)
+    stor_contacts_data.show_all([res])
     return res
 
 
 def contact_find_by_id(*args, **kwargs):
     params, *_ = args
-    res = stor_contacts["Contacts"]["data"].find_by_id(params)
+    res = stor_contacts_data.find_by_id(params)
     # storage_save_file(stor_contacts["Contacts"])
-    stor_contacts["Contacts"]["data"].show_all([res])
+    stor_contacts_data.show_all([res])
 
     return res
 
 
 def contact_set(*args, **kwargs):
     params, *_ = args
-    find_contact = stor_contacts["Contacts"]["data"].find_by_id(params)
+    find_contact = stor_contacts_data.find_by_id(params)
     res = find_contact.update_all(params)
-    storage_save_file(stor_contacts["Contacts"])
-    stor_contacts["Contacts"]["data"].show_all([res])
+    storage_save_file(stor_contacts_box)
+    stor_contacts_data.show_all([res])
     return res
 
 
 def contact_phone_add(*args, **kwargs):
     params, *_ = args
-    find_contact = stor_contacts["Contacts"]["data"].find_by_id(params)
+    find_contact = stor_contacts_data.find_by_id(params)
     res = find_contact.add_phones(params)
-    storage_save_file(stor_contacts["Contacts"])
-    stor_contacts["Contacts"]["data"].show_all([res])
-
+    storage_save_file(stor_contacts_box)
+    stor_contacts_data.show_all([res])
     return res
 
 
 def contact_phone_edit(*args, **kwargs):
     params, *_ = args
     # print(f"contact_add args: {params}")
-    find_contact = stor_contacts["Contacts"]["data"].find_by_id(params)
+    find_contact = stor_contacts_data.find_by_id(params)
     res = find_contact.edit_phone(params)
-    storage_save_file(stor_contacts["Contacts"])
-    stor_contacts["Contacts"]["data"].show_all([res])
-
+    storage_save_file(stor_contacts_box)
+    stor_contacts_data.show_all([res])
     return res
 
 
