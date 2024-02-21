@@ -1,6 +1,8 @@
 # from ast import Raise
 from datetime import datetime
 
+
+=======
 from contacts.contact import Contact
 
 # from contact import Record
@@ -64,6 +66,7 @@ class Contacts:
             print(el)
 
     def birthday(self, dates):
+
         dates_list = dates.split()
         upcoming_birthdays_list = []
         str_start = None

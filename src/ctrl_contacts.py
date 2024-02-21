@@ -3,9 +3,11 @@
 from save_load.save_load import storage_save_file
 from storage_svc import get_storage_contacts
 
-# from main import get_storage_contacts
 
-# from main import my_storage
+import contacts.contacts as ctrl
+
+from main import my_storage
+from save_load.save_load import storage_save_file
 
 # import __main__
 
@@ -25,6 +27,7 @@ stor_contacts = get_storage_contacts()
 # print(stor_contacts)
 
 
+
 def contact_add(*args, **kwargs):
     params, *_ = args
     res = stor_contacts["Contacts"]["data"].add(params)
@@ -38,6 +41,7 @@ def contact_find_by_id(*args, **kwargs):
     res = stor_contacts["Contacts"]["data"].find_by_id(params)
     # storage_save_file(stor_contacts["Contacts"])
     stor_contacts["Contacts"]["data"].show_all([res])
+
     return res
 
 
@@ -108,9 +112,10 @@ def contact_birthday(*args, **kwargs):
     print(f"contact_add args: {args}")
     print(f"contact_add args: {params}")
     print(f"contact_add kwargs: {kwargs}")
-    # res = birthday(params)
-    # print(f"result search birthday:\n {res}")
-    # return res
+    res = my_storage["Contacts"].birthday_find(params)
+    print(f"result search birthday:\n {res}")
+    return res
+
 
 
 def contact_showall(*args, **kwargs):
