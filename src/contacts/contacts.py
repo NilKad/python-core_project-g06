@@ -1,8 +1,6 @@
 # from ast import Raise
 from datetime import datetime
 
-# from contact import Record
-# from collections import UserDict
 from contact import Contact
 
 # from contact import FirstName, LastName, Email, Phone, Birthday, Address, Record
@@ -46,7 +44,7 @@ class Contacts:
                 res.append(el)
         return res
 
-    def birthday(self, dates):
+    def birthday_find(self, dates):
         dates_list = dates.split()
         upcoming_birthdays_list = []
         str_start = None

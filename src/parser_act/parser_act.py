@@ -1,5 +1,4 @@
 import argparse
-from operator import concat
 import shutil
 import sys
 from ctrl_contacts import (

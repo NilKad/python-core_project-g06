@@ -2,7 +2,7 @@ import os
 import sys
 from my_lib.textc import textc
 from notes.notes import Notes
-from parser_act import create_parser
+from parser_act.parser_act import create_parser
 from save_load.save_load import storage_load_file, storage_save_file
 
 

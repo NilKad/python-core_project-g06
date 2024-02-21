@@ -1,4 +1,9 @@
-from contacts.contacts import birthday
+# from contacts.contacts import birthday_find
+
+import contacts.contacts as ctrl
+
+from main import my_storage
+from save_load.save_load import storage_save_file
 
 
 def contact_add(*args, **kwargs):
@@ -6,8 +11,10 @@ def contact_add(*args, **kwargs):
     print(f"contact_add args: {args}")
     print(f"contact_add args: {params}")
     print(f"contact_add kwargs: {kwargs}")
+    res = ctrl.add(params)
 
-    return "contact add OK"
+    storage_save_file(my_storage["Contacts"])
+    return res
 
 
 def contact_set(*args, **kwargs):
@@ -69,7 +76,7 @@ def contact_birthday(*args, **kwargs):
     print(f"contact_add args: {args}")
     print(f"contact_add args: {params}")
     print(f"contact_add kwargs: {kwargs}")
-    res = birthday(params)
+    res = my_storage["Contacts"].birthday_find(params)
     print(f"result search birthday:\n {res}")
     return res
 
