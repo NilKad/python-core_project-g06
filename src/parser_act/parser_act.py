@@ -343,7 +343,7 @@ def handler_sort_files(args):
 # конфиг парсера с описанием структуры, команд и параметров     #
 # каждая команда вызывает свой соответстыующий метод handler_   #
 #################################################################
-def create_parser():
+def my_parser():
     parser = argparse.ArgumentParser(
         prog="myhelper", description="You helper application.", exit_on_error=False
     )
@@ -634,7 +634,7 @@ if __name__ == "__main__":
     # print(sys.argv)
 
     # parser = createParser()
-    args = create_parser()
+    args = my_parser()
     print(f"args: {args}")
     print(f"args.command: {args.command}")
     # print(not args)

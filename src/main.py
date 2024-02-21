@@ -1,13 +1,23 @@
 import os
 import sys
+from contacts.contacts import Contacts
 from my_lib.textc import textc
 from notes.notes import Notes
-from parser_act.parser_act import create_parser
+from parser_act.parser_act import my_parser
 from save_load.save_load import storage_load_file, storage_save_file
 
-
+# global my_storage
+global my_storage
 my_storage = {}
-my_storage_list = {Notes: "storage_notes.bin"}
+my_storage_list = {Notes: "storage_notes.bin", Contacts: "storage_contacts.bin"}
+
+
+# print(my_storage)
+
+
+def get_storage_contacts():
+    return my_storage_list
+    pass
 
 
 def storage_init(stor_class, stor_path):
@@ -35,7 +45,7 @@ def storage_load():
 
 def main():
     storage_load()
-    parser_main = create_parser()
+    parser_main = my_parser()
     # args.parse_args(["note", "-h"])
 
     # create_parser()

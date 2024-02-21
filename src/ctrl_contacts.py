@@ -1,7 +1,19 @@
-# from contacts.contacts import birthday
+# from contacts import birthday
 
+# from main import get_storage_contacts
 
-from contacts import birthday
+# from main import my_storage
+
+# import __main__
+
+# contacts_storage = my_storage['Contacts']
+# contacts_storage_data = contacts_storage['data']
+# global my_storage
+
+# print(__main__.my_storage)
+
+# print(get_storage_contacts())
+# my_storage_conta
 
 
 def contact_add(*args, **kwargs):
@@ -72,9 +84,9 @@ def contact_birthday(*args, **kwargs):
     print(f"contact_add args: {args}")
     print(f"contact_add args: {params}")
     print(f"contact_add kwargs: {kwargs}")
-    res = birthday(params)
-    print(f"result search birthday:\n {res}")
-    return res
+    # res = birthday(params)
+    # print(f"result search birthday:\n {res}")
+    # return res
 
 
 def contact_show(*args, **kwargs):

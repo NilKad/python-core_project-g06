@@ -1,13 +1,13 @@
-from address import Address
-from birthday import Birthday
-from email_cl import Email_str
-from first_name import First_name
-from last_name import Last_name
-from phone import Phone
+from contacts.address import Address
+from contacts.birthday import Birthday
+from contacts.email_cl import Email_str
+from contacts.first_name import First_name
+from contacts.last_name import Last_name
+from contacts.phone import Phone
 
 
 class Contact:
-    
+
     def __init__(self, args, id):
         self.__id = id
         self.__phones = set()
@@ -113,6 +113,3 @@ class Contact:
             if phone in el:
                 return True
         return False
-
-
-
