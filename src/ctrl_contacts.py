@@ -1,7 +1,7 @@
 # from contacts import birthday
 # from contacts.contacts import contacts
 from save_load.save_load import storage_save_file
-from storage_svc import get_storage_contacts
+from stor_srv import get_stor_contacts
 
 
 # from main import my_storage
@@ -17,7 +17,7 @@ from save_load.save_load import storage_save_file
 
 # print(get_storage_contacts())
 # my_storage_conta
-stor_contacts = get_storage_contacts()
+stor_contacts = get_stor_contacts()
 # stor_data = stor_contacts["data"]
 # stor_path = stor_contacts["path"]
 

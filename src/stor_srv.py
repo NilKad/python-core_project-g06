@@ -18,21 +18,20 @@ my_storage_list = {Notes: "storage_notes.bin", Contacts: "storage_contacts.bin"}
 # print(my_storage)
 
 
-def get_storage_contacts():
+def get_stor_contacts():
     return my_storage
     pass
 
 
+def get_stor_contacts1():
+    return my_storage["Contacts"]
+
+
 def storage_init(stor_class, stor_path):
     class_name = str(stor_class.__name__)
-    # print(f"*******    type: {class_name}")
     my_storage[class_name] = {}
     my_storage[class_name]["data"] = stor_class()
     my_storage[class_name]["path"] = stor_path
-    # print(f"*******    my_storage: {my_storage[class_name]["data"].__dict__}")
-    # print(f"*******    my_storage: {my_storage[class_name]["data"]['contacts']}")
-
-    # print(f"*******    data: {class_name['data']}")
 
 
 def storage_load():
