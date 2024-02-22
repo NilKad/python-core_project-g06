@@ -1,3 +1,4 @@
+# import startup
 import os
 import sys
 from stor_svc import storage_load
