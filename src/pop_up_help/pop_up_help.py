@@ -2,77 +2,81 @@ from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 
-def search_contacts():
-    print("Function: search_contacts")
+from parser_act.parser_act import (
+    handler_add_contact,
+    handler_add_note,
+    handler_birthday_contact,
+    handler_del_contact,
+    handler_del_note,
+    handler_find_by_id_contact,
+    handler_find_contact,
+    handler_find_note,
+    handler_findsubject_note,
+    handler_phone_add_contact,
+    handler_phone_del_contact,
+    handler_phone_edit_contact,
+    handler_set_contact,
+    handler_set_note,
+    handler_show_contact,
+    handler_show_note,
+    handler_sort_by_tag_note,
+    handler_sort_files,
+)
 
 
-def edit_contact():
-    print("Function: edit_contact")
-
-
-def delete_contact():
-    print("Function: delete_contact")
-
-
-def add_phone():
-    print("Function: add_phone")
-
-
-def edit_phone():
-    print("Function: edit_phone")
-
-
-def delete_phone():
-    print("Function: delete_phone")
-
-
-def add_note():
-    print("Function: add_note")
-
-
-def edit_note():
-    print("Function: edit_note")
-
-
-def delete_note():
-    print("Function: delete_note")
-
-
-# Словари функций для каждого уровня меню
 top_level_commands = {
     "contact": {
-        "add": add_contact,
-        "edit": edit_contact,
-        "delete": delete_contact,
+        "add": handler_add_contact,
+        "edit": handler_set_contact,
+        "delete": handler_del_contact,
+        "find": handler_find_contact,
+        "findbyid": handler_find_by_id_contact,
+        "phone": {
+            "add": handler_phone_add_contact,
+            "edit": handler_phone_edit_contact,
+            "delete": handler_phone_del_contact,
+        },
+        "birthday": handler_birthday_contact,
+        "show": handler_show_contact,
     },
     "phone": {
-        "add": add_phone,
-        "edit": edit_phone,
-        "delete": delete_phone,
+        "add": handler_phone_add_contact,
+        "delete": handler_phone_del_contact,
     },
     "notes": {
-        "add": add_note,
-        "edit": edit_note,
-        "delete": delete_note,
-    }
+        "add": handler_add_note,
+        "edit": handler_set_note,
+        "delete": handler_del_note,
+        "find": handler_find_note,
+        "findsubject": handler_findsubject_note,
+        "sorttag": handler_sort_by_tag_note,
+        "show": handler_show_note,
+    },
+    "filesort": {
+        "sort": handler_sort_files,
+    },
 }
 
-# Создаем список всех команд для автодополнения
 all_commands = []
 for top_command, sub_commands in top_level_commands.items():
     all_commands.append(top_command)
-    all_commands.extend(
-        [f"{top_command} {sub_command}" for sub_command in sub_commands])
+    if isinstance(sub_commands, dict):
+        all_commands.extend(
+            [f"{top_command} {sub_command}" for sub_command in sub_commands]
+        )
 
 completer = WordCompleter(all_commands)
 
 
 def get_suggestions():
     while True:
-        user_input = prompt('Enter command: ', completer=completer,
-                            auto_suggest=AutoSuggestFromHistory())
+        user_input = prompt(
+            "Enter command: ",
+            completer=completer,
+            auto_suggest=AutoSuggestFromHistory(),
+        )
 
-        if user_input.lower() == 'exit':
+        if user_input.lower() == "exit":
             break
 
         parts = user_input.split()
