@@ -1,8 +1,17 @@
 # from ast import Raise
 from datetime import datetime
+
+# import pickle
 from contacts.contact import Contact
-from src.save_load.save_load import storage_save_file
-from src.stor_svc import get_id_by_name
+from save_load.save_load import storage_load_file, storage_save_file
+
+# from src.save_load.save_load import storage_load_file, storage_save_file
+
+# from save_load.save_load import storage_load_file
+# from stor_svc import get_id_by_name
+
+# from save_load.save_load import storage_load_file, storage_save_file
+# from stor_svc import get_id_by_name
 
 # from contact import Record
 # from collections import UserDict
@@ -14,7 +23,8 @@ from src.stor_svc import get_id_by_name
 class Contacts:
     def __init__(self):
         self.data = []
-        self.id = 0
+        self.path = "storage_contacts.bin"
+        self.load()
 
     def find_by_id(self, id):
         id = id["id"]
@@ -25,9 +35,9 @@ class Contacts:
 
     def add(self, data):
         # id = self.id
-        contact = Contact(data, self.id)
+        contact = Contact(data, self.__id)
         self.data.append(contact)
-        self.id += 1
+        self.__id += 1
         return contact
 
     def set(self, data):
@@ -97,10 +107,9 @@ class Contacts:
         return upcoming_birthdays_list
 
     def save(self):
-        id, path = get_id_by_name(self.__class__.__name__)
-        stor = {"id": id, "path": path, "data": self.data}
-        storage_save_file(stor)
+        storage_save_file(self)
+
 
     def load(self):
-        id, path = get_id_by_name(self.__class__.__name__)
-        stor = {"id": id, "data": self.data}
+        storage_load_file(self)
+

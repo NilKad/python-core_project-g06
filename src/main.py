@@ -1,5 +1,4 @@
 # import startup
-import os
 import sys
 from stor_svc import storage_load
 from my_lib.textc import textc
@@ -7,16 +6,11 @@ from parser_act.parser_act import my_parser
 
 # from save_load.save_load import storage_load_file, storage_save_file
 
-# global my_storage
-# global my_storage
-
 
 def main():
     storage_load()
     parser_main = my_parser()
-    # args.parse_args(["note", "-h"])
 
-    # create_parser()
     while True:
         command_input = input("Input command: ")
 

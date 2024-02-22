@@ -1,4 +1,4 @@
-from save_load.save_load import storage_save_file
+# from save_load.save_load import storage_save_file
 from stor_svc import (
     get_stor_note,
     get_stor_note_box,
@@ -15,9 +15,11 @@ stor_note_path = get_stor_note_path
 
 def note_add(*args, **kwargs):
     params, *_ = args
-    res = stor_notes["Notes"]["data"].add(params)
-    storage_save_file(stor_notes["Notes"])
-    stor_notes["Notes"]["data"].show_all([res])
+    res = stor_notes["Notes"].add(params)
+    # res = stor_notes["Notes"]["data"].add(params)
+    # storage_save_file(stor_notes["Notes"])
+    stor_notes["Notes"].save()
+    stor_notes["Notes"].show_all([res])
     return res
 
 
@@ -33,7 +35,8 @@ def note_set(args):
     find_note = stor_notes["Notes"]["data"].find_by_id(args["id"])
 
     res = find_note.update_all(args)
-    storage_save_file(stor_notes["Notes"])
+    stor_notes["Notes"].save()
+    # storage_save_file(stor_notes["Notes"])
     stor_notes["Notes"]["data"].show_all([res])
     return res
 
@@ -41,7 +44,8 @@ def note_set(args):
 def note_del(args):
     print(f"note_del args: {args}")
     res = stor_notes["Notes"]["data"].delete(args["id"])
-    storage_save_file(stor_notes["Notes"])
+    stor_notes["Notes"].save()
+    # storage_save_file(stor_notes["Notes"])
     return res
 
 

@@ -24,8 +24,8 @@ __structure_class_new = {"stor": {"id": int, "data": ["record1", "record2"]}}
 
 
 my_storage = {}
-my_stor_contacts = Contacts()
-my_stor_contacts_path = "storage_contacts_new.bin"
+# my_stor_contacts = Contacts()
+# my_stor_contacts_path = "storage_contacts_new.bin"
 my_storage_list = {Notes: "storage_notes.bin", Contacts: "storage_contacts.bin"}
 
 
@@ -73,25 +73,29 @@ def get_stor_note_path():
 
 def storage_init(stor_class, stor_path):
     class_name = str(stor_class.__name__)
-    my_storage[class_name] = {}
-    my_storage[class_name]["data"] = stor_class()
-    my_storage[class_name]["path"] = stor_path
+    # my_storage[class_name]["path"] = stor_path
+    # my_storage[class_name] = {}
+    my_storage[class_name] = stor_class()
+    # my_storage[class_name]["path"] = stor_path
 
 
 def storage_load():
     for stor_class, stor_path in my_storage_list.items():
+        storage_init(stor_class, stor_path)
 
-        if os.path.exists(stor_path):
-            storage_init(stor_class, stor_path)
-            try:
-                storage_load_file(my_storage[stor_class.__name__])
-            except Exception:
-                print("!!!Error load. Save New structore")
-                storage_save_file(my_storage[stor_class.__name__])
-                print(type(Exception))
-        else:
-            storage_init(stor_class, stor_path)
-            storage_save_file(my_storage[stor_class.__name__])
+        # if os.path.exists(stor_path):
+        #     storage_init(stor_class, stor_path)
+        #     try:
+        #         # storage_load_file(my_storage[stor_class.__name__])
+        #         my_storage[stor_class.__name__].load()
+        #     except Exception:
+        #         print("!!!Error load. Save New structore")
+
+        #         # storage_save_file(my_storage[stor_class.__name__])
+        #         print(type(Exception))
+        # else:
+        #     storage_init(stor_class, stor_path)
+        #     storage_save_file(my_storage[stor_class.__name__])
 
         # типа новая верси, тестировалась
         # if os.path.exists(my_stor_contacts_path):

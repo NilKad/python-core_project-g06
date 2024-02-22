@@ -8,6 +8,7 @@ class Note:
             # print(el)
             self.__setattr__(key, value)
             # self.__setattr__(key, value)
+        # self.id = id
 
         # self.tag = ['No tag`s']
         # self.subject = subject

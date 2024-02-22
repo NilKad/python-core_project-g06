@@ -3,25 +3,31 @@ from rich.console import Console
 from rich.table import Table
 
 from notes.note import Note
+from save_load.save_load import storage_load_file, storage_save_file
 
 
 class Notes:
     # __id = 0
 
     def __init__(self):
-        self.__id = 0
-        self.data = []
+        self.stor = {}
+        self.stor["data"] = []
+        self.path = "storage_note.bin"
+        self.load()
+        # self.__id = 0
+        # self.stor.data = []
 
     def add(self, args):
+        args["id"] = self.stor.data["id"]
         note = Note(args)
-        note.id = self.__id
-        self.data.append(note)
-        self.__id += 1
+        # note.id = self.__id
+        self.stor.data.append(note)
+        self.stor.id += 1
         return note
 
     def find_by_id(self, id):
         # id = id["id"]
-        for el in self.data:
+        for el in self.stor.data:
             if el.id == id:
                 print("FIND NOTE!!!!!")
                 return el
@@ -29,7 +35,7 @@ class Notes:
 
     def find_by_tags(self, args):
         result = []
-        for note in self.data:
+        for note in self.stor.data:
             for el in args["tags"]:
                 if el in note.tags:
                     result.append(note)
@@ -51,11 +57,9 @@ class Notes:
         console = Console()
         console.print(contact_table)
 
-
-
     def sort_by_tag(self):
         result = {}
-        for note in self.data:
+        for note in self.stor.data:
             for tag in note.tags:
                 if tag not in result.keys():
                     result[tag] = [note]
@@ -76,7 +80,7 @@ class Notes:
         console.print(contact_table)
 
     def show_by_id(self, id):
-        for note in self.data:
+        for note in self.stor.data:
             if note.ID == id:
                 all_tag = ""
                 for tag in note.tag:
@@ -95,7 +99,7 @@ class Notes:
 
     def find_by_subject(self, subject):
         result = []
-        for note in self.data:
+        for note in self.stor.data:
             # if str(note.subject).find(subject):
             if note.subject.find(subject) >= 0:
                 result.append(note)
@@ -107,7 +111,7 @@ class Notes:
 
     def show_by_subject(self, subject):
         result = []
-        for note in self.data:
+        for note in self.stor.data:
             if subject == note.subject:
                 result.append(note)
             all_tag = ""
@@ -127,11 +131,11 @@ class Notes:
         console.print(contact_table)
 
     def delete(self, id):
-        for note in self.data:
+        for note in self.stor.data:
             if note.id == id:
-                self.data.remove(note)
+                self.stor.data.remove(note)
                 return
-        # self.data.remove(obj)
+        # self.stor.data.remove(obj)
         return
 
     def show_all_notes(self):
@@ -141,7 +145,7 @@ class Notes:
         contact_table.add_column("Title", style="yellow")
         contact_table.add_column("Text", style="green")
 
-        for note in self.data:
+        for note in self.stor.data:
             all_tag = ""
             for tag in note.tag:
                 all_tag = all_tag + ", " + tag
@@ -154,3 +158,9 @@ class Notes:
     def show_all(self, data):
         for el in data:
             print(el)
+
+    def save(self):
+        storage_save_file(self)
+
+    def load(self):
+        storage_load_file(self)

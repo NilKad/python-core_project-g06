@@ -1,44 +1,42 @@
 import pickle
 
-# Example: filename = 'adressbook.bin'
 
-
-def storage_load_file(storage):
-    filename = storage["path"]
+def storage_save_file(self):
+    stor = {"id": self.__id, "data": self.data}
     try:
-        with open(filename, "rb") as fh:
-            unpacked = pickle.load(fh)
-            storage["data"].data = unpacked["stor"]
-            storage["data"].id = unpacked["id"]
+        with open(self.path, "wb") as fh:
+            pickle.dump(stor, fh)
     except Exception as err:
         raise err
-    return storage
 
 
-def storage_save_file(storage, id=None):
-    filename = storage["path"]
-    stor = {"id": storage.id, "stor": storage["data"]}
-
-    with open(filename, "wb") as fh:
-        pickle.dump(stor, fh)
-        # print(f"Book saved {storage.__name__}!")
-
-
-# def storage_save_file_new(my_stor_contacts, my_stor_contacts_path):
-#     stor = my_stor_contacts.data
-#     filename = my_stor_contacts_path
-#     with open(filename, "wb") as fh:
-#         pickle.dump(stor, fh)
-#         print("Book saved !")
+def storage_load_file(self):
+    try:
+        with open(self.path, "rb") as fh:
+            response = pickle.load(fh)
+            self.stor = response
+    except Exception as err:
+        print("!!!Error load. Save New structore")
+        self.stor["id"] = 0
+        self.save()
 
 
-# def storage_load_file_new(storage, path_str):
-#     filename = path_str
+# def __storage_load_file__(storage):
+#     filename = storage["path"]
 #     try:
 #         with open(filename, "rb") as fh:
 #             unpacked = pickle.load(fh)
-#             storage.data = unpacked
-#             print("Book loaded !")
+#             storage["data"].data = unpacked["stor"]
+#             storage["data"].id = unpacked["id"]
 #     except Exception as err:
 #         raise err
 #     return storage
+
+
+# def __storage_save_file__(storage, id=None):
+#     filename = storage["path"]
+#     # stor = {"id": storage["id"], "stor": storage["data"]}
+#     stor = {}
+#     with open(filename, "wb") as fh:
+#         pickle.dump(stor, fh)
+#         # print(f"Book saved {storage.__name__}!")
