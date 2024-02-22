@@ -1,10 +1,10 @@
 import os
 import sys
+from stor_svc import storage_load
 from my_lib.textc import textc
 from parser_act.parser_act import my_parser
 
 from save_load.save_load import storage_load_file, storage_save_file
-from stor_svc import storage_load
 
 # global my_storage
 # global my_storage
