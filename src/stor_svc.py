@@ -3,9 +3,9 @@ from contacts.contacts import Contacts
 from notes.notes import Notes
 from save_load.save_load import (
     storage_load_file,
-    storage_load_file_new,
+    # storage_load_file_new,
     storage_save_file,
-    storage_save_file_new,
+    # storage_save_file_new,
 )
 
 __structure_storage = {
@@ -30,6 +30,13 @@ my_storage_list = {Notes: "storage_notes.bin", Contacts: "storage_contacts.bin"}
 
 
 # print(my_storage)
+
+
+def get_id_by_name(name):
+    for key, path in my_storage_list.items():
+        if name == key.__name__:
+            id = my_storage[name]["id"]
+            return [id, path]
 
 
 def get_stor_contacts():

@@ -1,6 +1,8 @@
 # from ast import Raise
 from datetime import datetime
 from contacts.contact import Contact
+from src.save_load.save_load import storage_save_file
+from src.stor_svc import get_id_by_name
 
 # from contact import Record
 # from collections import UserDict
@@ -93,3 +95,12 @@ class Contacts:
                     upcoming_birthdays_list.append(el)
 
         return upcoming_birthdays_list
+
+    def save(self):
+        id, path = get_id_by_name(self.__class__.__name__)
+        stor = {"id": id, "path": path, "data": self.data}
+        storage_save_file(stor)
+
+    def load(self):
+        id, path = get_id_by_name(self.__class__.__name__)
+        stor = {"id": id, "data": self.data}
