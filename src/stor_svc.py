@@ -36,6 +36,10 @@ def get_stor_contacts():
     return my_storage
 
 
+def get_stor_note():
+    return my_storage
+
+
 def get_stor_contacts_box():
     return my_storage["Contacts"]
 
@@ -49,15 +53,15 @@ def get_stor_contacts_path():
 
 
 def get_stor_note_box():
-    return my_storage["Note"]
+    return my_storage["Notes"]
 
 
 def get_stor_note_data():
-    return my_storage["Note"].data
+    return my_storage["Notes"].data
 
 
 def get_stor_note_path():
-    return my_storage["Note"].path
+    return my_storage["Notes"].path
 
 
 def storage_init(stor_class, stor_path):

@@ -6,6 +6,9 @@ from stor_svc import (
     get_stor_contacts_box,
     get_stor_contacts_data,
     get_stor_contacts_path,
+    get_stor_note_box,
+    get_stor_note_data,
+    get_stor_note_path,
 )
 
 
@@ -20,13 +23,11 @@ stor_contacts_box = get_stor_contacts_box
 stor_contacts_data = get_stor_contacts_data
 stor_contacts_path = get_stor_contacts_path
 
-# stor_note_box = get_stor_note_box
-# stor_note_data = get_stor_note_data
-# stor_note_path = get_stor_note_path
-
 
 def contact_add(*args, **kwargs):
     params, *_ = args
+    res = stor_contacts_data.add(params)
+
     res = stor_contacts_data.add(params)
     storage_save_file(stor_contacts_box)
     stor_contacts_data.show_all([res])
