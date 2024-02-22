@@ -33,7 +33,7 @@ from sort_files.sort_files import sort_func
 # print(size_console)
 #!!!!!!!!!!!!!!!
 
-print(textc(f"sadadasd", "RED"))
+# print(textc(f"sadadasd", "RED"))
 
 
 #############################################################################################################
@@ -208,7 +208,7 @@ def handler_add_contact(args):
     # print(f"____handler_add_note result: {result}")
 
     res_ctrl = contact_add(res)
-    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+    # print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
     return res
 
@@ -247,7 +247,7 @@ def handler_set_contact(args):
         new_res[key] = value
     new_res["id"] = int(new_res["id"])
     res_ctrl = contact_set(new_res)
-    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+    # print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
     return new_res
 
@@ -257,7 +257,7 @@ def handler_del_contact(args):
     req_params = ["id"]
     res = addition_input(args, req_params)
     res_ctrl = contact_del(res)
-    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+    # print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
     return res
 
 
@@ -267,7 +267,7 @@ def handler_find_by_id_contact(args):
     res = addition_input(args, req_params)
 
     res_ctrl = contact_find(res)
-    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+    # print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
     return res
 
@@ -279,7 +279,7 @@ def handler_find_contact(args):
     res = addition_input(args, req_params)
 
     res_ctrl = contact_find(res)
-    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+    # print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
     return res
 
@@ -292,7 +292,7 @@ def handler_phone_add_contact(args):
 
     res["id"] = int(res["id"])
     res_ctrl = contact_phone_add(res)
-    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+    # print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
     return res
 
@@ -305,7 +305,7 @@ def handler_phone_edit_contact(args):
 
     res["id"] = int(res["id"])
     res_ctrl = contact_phone_edit(res)
-    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+    # print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
     return res
 
@@ -318,7 +318,7 @@ def handler_phone_del_contact(args):
 
     res["id"] = int(res["id"])
     res_ctrl = contact_phone_del(res)
-    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+    # print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
     return res
 
@@ -329,18 +329,18 @@ def handler_birthday_contact(args):
     res = addition_input(args, req_params)
 
     res_ctrl = contact_birthday(res)
-    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+    # print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
     return res
 
 
 def handler_show_contact(args):
-    print(f"handler_show_all_contact args: {args}")
+    # print(f"handler_show_all_contact args: {args}")
     req_params = []
     res = addition_input(args, req_params)
 
     res_ctrl = contact_showall(res)
-    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+    # print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
     return res
 
@@ -353,7 +353,7 @@ def handler_sort_files(args):
     res = addition_input(args, req_params)
 
     res_ctrl = sort_func(res)
-    print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
+    # print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
     return res
 

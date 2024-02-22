@@ -2,6 +2,9 @@
 from datetime import datetime
 from contacts.contact import Contact
 
+from rich.console import Console
+from rich.table import Table
+
 # from contact import Record
 # from collections import UserDict
 # from contact import Contact
@@ -57,6 +60,43 @@ class Contacts:
             ):
                 res.append(el)
         return res
+
+    def get_all(self):
+        return self.data
+
+    def show_col(self, data):
+        contact_table = Table(title="contacts", show_lines=True, width=125)
+        contact_table.add_column("ID", style="white")
+        contact_table.add_column("First Name", style="green")
+        contact_table.add_column("Last Name", style="green")
+        contact_table.add_column("Phones", style="magenta")
+        contact_table.add_column("Address", style="yellow")
+        contact_table.add_column("Email", style="cyan")
+        contact_table.add_column("Birthday", style="white")
+
+        for contact in data:
+            # all_phones = ""
+            # all_phones = str(data["phones"])
+            # for phone in contact["phones"]:
+            #     all_phones = all_phones + ", " + phone
+            #     all_phones = all_phones.removeprefix(", ")
+            all_phones = ""
+            for phone in contact.phones:
+                all_phones += f", {str(phone)}"
+                all_phones = all_phones.removeprefix(", ")
+
+            contact_table.add_row(
+                str(contact.id),
+                str(contact.first_name),
+                str(contact.last_name),
+                str(all_phones),
+                str(contact.address),
+                str(contact.email),
+                str(contact.birthday),
+            )
+
+        console = Console()
+        console.print(contact_table)
 
     def show_all(self, data):
         for el in data:
