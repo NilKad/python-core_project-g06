@@ -42,3 +42,27 @@ Command Line interface give you all hints to make different actions.
 
 ## License
 This project is licensed under the MIT License - see the LICENSE.md file for details.
+
+
+### List of commands: 
+contact
+   add
+   set
+   delete
+   find
+   findbyid
+   phone
+      add
+      edit
+      delete
+   birthday
+   show
+notes
+   add
+   set
+   delete
+   find
+   findsubject
+   sorttag
+   show
+filesort
