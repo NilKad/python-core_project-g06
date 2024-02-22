@@ -2,54 +2,58 @@ from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 
-from ctrl_contacts import (
-    contact_add,
-    contact_find_by_id,
-    contact_set,
-    contact_phone_add,
-    contact_phone_edit,
-    contact_phone_del,
-    contact_del,
-    contact_find,
-    contact_birthday,
-    contact_showall,
-    contact_show,
-)
-
-from ctrl_notes import (
-    note_add,
-    note_set,
-    note_del,
-    note_find,
-    note_findsubject,
-    note_sort_by_tag,
-    note_show,
+# Import functions from parser_act.py
+from src.parser_act.parser_act import (
+    handler_add_note,
+    handler_set_note,
+    handler_del_note,
+    handler_find_note,
+    handler_findsubject_note,
+    handler_sort_by_tag_note,
+    handler_show_note,
+    handler_add_contact,
+    handler_set_contact,
+    handler_del_contact,
+    handler_find_by_id_contact,
+    handler_find_contact,
+    handler_phone_add_contact,
+    handler_phone_edit_contact,
+    handler_phone_del_contact,
+    handler_birthday_contact,
+    handler_show_contact,
+    handler_sort_files,
 )
 
 top_level_commands = {
     "contact": {
-        "add": contact_add,
-        "find_by_id": contact_find_by_id,
-        "set": contact_set,
+        "add": handler_add_contact,
+        "edit": handler_set_contact,
+        "delete": handler_del_contact,
+        "find": handler_find_contact,
+        "findbyid": handler_find_by_id_contact,
         "phone": {
-            "add": contact_phone_add,
-            "edit": contact_phone_edit,
-            "del": contact_phone_del,
+            "add": handler_phone_add_contact,
+            "edit": handler_phone_edit_contact,
+            "delete": handler_phone_del_contact,
         },
-        "del": contact_del,
-        "find": contact_find,
-        "birthday": contact_birthday,
-        "showall": contact_showall,
-        "show": contact_show,
+        "birthday": handler_birthday_contact,
+        "show": handler_show_contact,
+    },
+    "phone": {
+        "add": handler_phone_add_contact,
+        "delete": handler_phone_del_contact,
     },
     "notes": {
-        "add": note_add,
-        "set": note_set,
-        "del": note_del,
-        "find": note_find,
-        "findsubject": note_findsubject,
-        "sort_by_tag": note_sort_by_tag,
-        "show": note_show,
+        "add": handler_add_note,
+        "edit": handler_set_note,
+        "delete": handler_del_note,
+        "find": handler_find_note,
+        "findsubject": handler_findsubject_note,
+        "sorttag": handler_sort_by_tag_note,
+        "show": handler_show_note,
+    },
+    "filesort": {
+        "sort": handler_sort_files,
     },
 }
 
