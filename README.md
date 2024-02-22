@@ -45,25 +45,24 @@ This project is licensed under the MIT License - see the LICENSE.md file for det
 
 
 ### List of commands: 
-        "add",
-        "edit",
-        "delete",
-        "find",
-        "findbyid",
-        "phone":
-            ["add",
-            "edit",
-            "delete"],
-        "birthday",
-        "show",
-        "phone":
-            ["add",
-            "delete"],
-         "notes": ["add",
-               "edit",
-               "delete",
-               "find",
-               "findsubject",
-               "sorttag",
-               "show"],
-         "filesort": "sort"
+contact
+   add
+   set
+   delete
+   find
+   findbyid
+   phone
+      add
+      edit
+      delete
+   birthday
+   show
+notes
+   add
+   set
+   delete
+   find
+   findsubject
+   sorttag
+   show
+filesort
