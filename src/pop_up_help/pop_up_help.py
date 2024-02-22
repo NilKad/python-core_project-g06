@@ -2,27 +2,27 @@ from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 
-# Import functions from parser_act.py
 from parser_act.parser_act import (
-    handler_add_note,
-    handler_set_note,
-    handler_del_note,
-    handler_find_note,
-    handler_findsubject_note,
-    handler_sort_by_tag_note,
-    handler_show_note,
     handler_add_contact,
-    handler_set_contact,
+    handler_add_note,
+    handler_birthday_contact,
     handler_del_contact,
+    handler_del_note,
     handler_find_by_id_contact,
     handler_find_contact,
+    handler_find_note,
+    handler_findsubject_note,
     handler_phone_add_contact,
-    handler_phone_edit_contact,
     handler_phone_del_contact,
-    handler_birthday_contact,
+    handler_phone_edit_contact,
+    handler_set_contact,
+    handler_set_note,
     handler_show_contact,
+    handler_show_note,
+    handler_sort_by_tag_note,
     handler_sort_files,
 )
+
 
 top_level_commands = {
     "contact": {
