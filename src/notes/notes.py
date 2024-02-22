@@ -46,12 +46,10 @@ class Notes:
 
         for note in result:
             contact_table.add_row(
-                args["tags"], str(note.ID), note.subject, note.content
+                args["tags"], str(note.id), note.subject, note.content
             )
         console = Console()
         console.print(contact_table)
-
-
 
     def sort_by_tag(self):
         result = {}
@@ -134,19 +132,38 @@ class Notes:
         # self.data.remove(obj)
         return
 
-    def show_all_notes(self):
+    def show_all_notes(self, data=Note):
+        if not data:
+            data = self
         contact_table = Table(title="All notes", show_lines=True, width=125)
         contact_table.add_column("ID", style="cyan")
         contact_table.add_column("Tag", style="magenta")
         contact_table.add_column("Title", style="yellow")
         contact_table.add_column("Text", style="green")
 
-        for note in self.data:
+        for note in data:
             all_tag = ""
-            for tag in note.tag:
+            for tag in note.tags:
                 all_tag = all_tag + ", " + tag
                 all_tag = all_tag.removeprefix(", ")
-            contact_table.add_row(str(note.ID), all_tag, note.subject, note.content)
+            contact_table.add_row(str(note.id), all_tag, note.subject, note.content)
+
+        console = Console()
+        console.print(contact_table)
+
+    def show_one(self, data):
+        contact_table = Table(title="All notes", show_lines=True, width=125)
+        contact_table.add_column("ID", style="cyan")
+        contact_table.add_column("Tag", style="magenta")
+        contact_table.add_column("Title", style="yellow")
+        contact_table.add_column("Text", style="green")
+
+        for note in data:
+            all_tag = ""
+            for tag in note.tags:
+                all_tag = all_tag + ", " + tag
+                all_tag = all_tag.removeprefix(", ")
+            contact_table.add_row(str(note.id), all_tag, note.subject, note.content)
 
         console = Console()
         console.print(contact_table)

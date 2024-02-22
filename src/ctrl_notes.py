@@ -17,14 +17,23 @@ def note_add(*args, **kwargs):
     params, *_ = args
     res = stor_notes["Notes"]["data"].add(params)
     storage_save_file(stor_notes["Notes"])
-    stor_notes["Notes"]["data"].show_all([res])
+    stor_notes["Notes"]["data"].show_all_notes([res])
+
+    # stor_notes["Notes"]["data"].show_all([res])
+    # stor_notes["Notes"]["data"].show_by_id(res)
+
     return res
 
 
 def note_find_by_id(id):
     res = stor_notes["Notes"]["data"].find_by_id(id)
-    stor_notes["Notes"]["data"].show_all([res])
-    stor_notes["Notes"]["data"].show_all(res)
+    stor_notes["Notes"]["data"].show_all_notes([res])
+
+    # stor_notes["Notes"]["data"].show_all_one([res])
+
+    # stor_notes["Notes"]["data"].show_one([res])
+    # stor_notes["Notes"]["data"].show_all([res])
+    # stor_notes["Notes"]["data"].show_all(res)
     return res
 
 
@@ -34,7 +43,10 @@ def note_set(args):
 
     res = find_note.update_all(args)
     storage_save_file(stor_notes["Notes"])
-    stor_notes["Notes"]["data"].show_all([res])
+    # stor_notes["Notes"]["data"].show_one()
+    stor_notes["Notes"]["data"].show_all_notes([res])
+
+    # stor_notes["Notes"]["data"].show_notes(res)
     return res
 
 
@@ -49,7 +61,9 @@ def note_find(*args, **kwargs):
     params, *_ = args
     print(f"note_add args: {params}")
     res = stor_notes["Notes"]["data"].find_by_tags(params)
-    stor_notes["Notes"]["data"].show_all(res)
+    # stor_notes["Notes"]["data"].show_all(res)
+    stor_notes["Notes"]["data"].show_all_notes([res])
+
     return res
 
 
@@ -57,15 +71,23 @@ def note_findsubject(*args, **kwargs):
     params, *_ = args
 
     print(f"note_add args: {params}")
-    res = stor_notes["Notes"]["data"].find_by_subject(params["subject"])
-    stor_notes["Notes"]["data"].show_all(res)
+    # res = stor_notes["Notes"]["data"].find_by_subject(params["subject"])
+    res = stor_notes["Notes"]["data"].show_by_subject(params["subject"])
+
+    # stor_notes["Notes"]["data"].show_all(res)
     return res
+
+
+# show_by_subject
 
 
 def note_sort_by_tag(*args, **kwargs):
     # params, *_ = args
+    # print ('AAAAAAAA')
     # print(f"note_add args: {params}")
+    # stor_notes["Notes"]["data"].sort_by_tag()
     stor_notes["Notes"]["data"].sort_by_tag()
+
     return "Note edit OK"
 
 
@@ -81,7 +103,8 @@ def note_show(*args, **kwargs):
 def note_showall(*args, **kwargs):
     params, *_ = args
     for_out = stor_notes["Notes"]["data"].data
-    res = stor_notes["Notes"]["data"].show_all(for_out)
+    # res = stor_notes["Notes"]["data"].show_all(for_out)
+    stor_notes["Notes"]["data"].show_all_notes(for_out)
     # storage_save_file(stor_contacts["Contacts"])
     # stor_contacts["Contacts"]["data"].show_all([res])
-    return res
+    return

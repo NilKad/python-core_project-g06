@@ -25,17 +25,21 @@ stor_contacts_path = get_stor_contacts_path
 
 
 def contact_add(*args, **kwargs):
+
     params, *_ = args
     res = stor_contacts["Contacts"]["data"].add(params)
     storage_save_file(stor_contacts["Contacts"])
-    stor_contacts["Contacts"]["data"].show_all([res])
+    # stor_contacts["Contacts"]["data"].show_all([res])
+    stor_contacts["Contacts"]["data"].show_col([res])
+    
     return res
 
 
 def contact_find_by_id(*args, **kwargs):
     params, *_ = args
     res = stor_contacts["Contacts"]["data"].find_by_id(params)
-    stor_contacts["Contacts"]["data"].show_all([res])
+    # stor_contacts["Contacts"]["data"].show_all([res])
+    stor_contacts["Contacts"]["data"].show_col([res])
 
     return res
 
@@ -45,7 +49,8 @@ def contact_set(*args, **kwargs):
     find_contact = stor_contacts["Contacts"]["data"].find_by_id(params)
     res = find_contact.update_all(params)
     storage_save_file(stor_contacts["Contacts"])
-    stor_contacts["Contacts"]["data"].show_all([res])
+    stor_contacts["Contacts"]["data"].show_col([res])
+    # stor_contacts["Contacts"]["data"].show_all([res])
     return res
 
 
@@ -54,7 +59,8 @@ def contact_phone_add(*args, **kwargs):
     find_contact = stor_contacts["Contacts"]["data"].find_by_id(params)
     res = find_contact.add_phones(params)
     storage_save_file(stor_contacts["Contacts"])
-    stor_contacts["Contacts"]["data"].show_all([res])
+    stor_contacts["Contacts"]["data"].show_col([res])
+    # stor_contacts["Contacts"]["data"].show_all([res])
     return res
 
 
@@ -64,7 +70,8 @@ def contact_phone_edit(*args, **kwargs):
     find_contact = stor_contacts["Contacts"]["data"].find_by_id(params)
     res = find_contact.edit_phone(params)
     storage_save_file(stor_contacts["Contacts"])
-    stor_contacts["Contacts"]["data"].show_all([res])
+    stor_contacts["Contacts"]["data"].show_col([res])
+    # stor_contacts["Contacts"]["data"].show_all([res])
     return res
 
 
@@ -74,7 +81,8 @@ def contact_phone_del(*args, **kwargs):
     find_contact = stor_contacts["Contacts"]["data"].find_by_id(params)
     res = find_contact.del_phone(params)
     storage_save_file(stor_contacts["Contacts"])
-    stor_contacts["Contacts"]["data"].show_all([res])
+    stor_contacts["Contacts"]["data"].show_col([res])
+    # stor_contacts["Contacts"]["data"].show_all([res])
     return "contact edit OK"
 
 
@@ -94,7 +102,8 @@ def contact_find(*args, **kwargs):
     find_contact = stor_contacts["Contacts"]["data"].find(search_string)
     # res = find_contact.edit_phone(params)
     # storage_save_file(stor_contacts["Contacts"])
-    stor_contacts["Contacts"]["data"].show_all([find_contact])
+    stor_contacts["Contacts"]["data"].show_col([find_contact])
+    # stor_contacts["Contacts"]["data"].show_all([find_contact])
 
     return find_contact
     return "contact edit OK"
@@ -113,7 +122,10 @@ def contact_birthday(*args, **kwargs):
 def contact_showall(*args, **kwargs):
     params, *_ = args
     for_out = stor_contacts["Contacts"]["data"].data
-    res = stor_contacts["Contacts"]["data"].show_all(for_out)
+    # res = stor_contacts["Contacts"]["data"].show_all(for_out)
+    res = stor_contacts["Contacts"]["data"].get_all()
+    # print (res)
+    stor_contacts["Contacts"]["data"].show_col(res)
     # storage_save_file(stor_contacts["Contacts"])
     # stor_contacts["Contacts"]["data"].show_all([res])
     return res
