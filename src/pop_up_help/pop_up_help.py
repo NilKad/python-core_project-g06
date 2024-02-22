@@ -3,7 +3,7 @@ from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 
 # Import functions from parser_act.py
-from src.parser_act.parser_act import (
+from parser_act.parser_act import (
     handler_add_note,
     handler_set_note,
     handler_del_note,
