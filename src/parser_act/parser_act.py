@@ -18,6 +18,7 @@ from ctrl_notes import (
     note_findsubject,
     note_set,
     note_show,
+    note_showall,
     note_sort_by_tag,
 )
 
@@ -136,6 +137,7 @@ def handler_set_note(args):
         ):
             continue
         new_res[key] = value
+    new_res["id"] = int(new_res["id"])
     res_ctrl = note_set(new_res)
     print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
     return new_res
@@ -145,6 +147,7 @@ def handler_del_note(args):
     print(f"handler_del_note args: {args}")
     req_params = ["id"]
     res = addition_input(args, req_params)
+    res["id"] = int(res["id"])
     res_ctrl = note_del(res)
     print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
     return res
@@ -165,8 +168,8 @@ def handler_find_note(args):
 def handler_findsubject_note(args):
     print(f"handler_findsubject_note args: {args}")
     req_params = ["subject"]
-    variables_in_set = ["subject"]
-    res = addition_input(args, req_params, variables_in_set)
+    # variables_in_set = ["subject"]
+    res = addition_input(args, req_params)
 
     res_ctrl = note_findsubject(res)
     print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
@@ -188,7 +191,7 @@ def handler_show_note(args):
     print(f"handler_show_note args: {args}")
     res = addition_input(args, [])
 
-    res_ctrl = note_show(res)
+    res_ctrl = note_showall(res)
     print(textc(f"Result from ctrl: {res_ctrl}", "BLUE"))
 
     return res
@@ -403,28 +406,28 @@ def my_parser():
         "--tags",
         dest="tags",
         type=str,
-        help="\033[31mInput %(dest)s for note\033[0m",
         nargs="+",
+        help="\033[31mInput %(dest)s for note\033[0m",
     )
 
-    note_edit_parser = subparser.add_parser("edit", help="Edit Note")
-    note_edit_parser.set_defaults(func=handler_set_note)
-    note_edit_parser.add_argument("-id", type=int)
-    note_edit_parser.add_argument(
+    note_set_parser = subparser.add_parser("set", help="Set Note argument")
+    note_set_parser.set_defaults(func=handler_set_note)
+    note_set_parser.add_argument("-id", type=int)
+    note_set_parser.add_argument(
         "-s",
         "--subject",
         dest="subject",
         type=str,
         help=textc("Input %(dest)s for note", "RED"),
     )
-    note_edit_parser.add_argument(
+    note_set_parser.add_argument(
         "-c",
         "--content",
         dest="content",
         type=str,
         help=textc("Input %(dest)s for note", "RED"),
     )
-    note_edit_parser.add_argument(
+    note_set_parser.add_argument(
         "-t",
         "--tags",
         dest="tags",
@@ -446,7 +449,10 @@ def my_parser():
     )
     note_findsubject_parser.set_defaults(func=handler_findsubject_note)
     note_findsubject_parser.add_argument(
-        dest="subject", nargs="*", help="Subject for search"
+        "-s",
+        dest="subject",
+        # nargs="*",
+        help="Subject for search",
     )
 
     note_sort_by_tag_parser = subparser.add_parser(
@@ -600,7 +606,7 @@ def my_parser():
     contact_phone_del_parser.set_defaults(func=handler_phone_del_contact)
     contact_phone_del_parser.add_argument("-id", type=int, help="contact ID")
     contact_phone_del_parser.add_argument(
-        "-p",
+        "-i",
         # nargs=2,
         dest="phones",
         type=str,
