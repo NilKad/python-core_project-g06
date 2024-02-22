@@ -218,7 +218,7 @@ def handler_set_contact(args):
     req_params = []
     excl_params = ["command", "func"]
     excl_params2 = ["command", "func", "id"]
-    variables_in_set = ["phone"]
+    variables_in_set = ["phones"]
 
     is_skeep_addition = False
     res = vars(args)
@@ -513,47 +513,47 @@ def my_parser():
         help=textc("Input %(dest)s for contact in format 2022-02-02", "RED"),
     )
 
-    contact_edit_parser = subparser.add_parser("set", help="contact add help")
+    contact_set_parser = subparser.add_parser("set", help="contact add help")
 
-    contact_edit_parser.set_defaults(func=handler_set_contact)
-    contact_edit_parser.add_argument("-id", type=int, help="contact ID")
-    contact_edit_parser.add_argument(
+    contact_set_parser.set_defaults(func=handler_set_contact)
+    contact_set_parser.add_argument("-id", type=int, help="contact ID")
+    contact_set_parser.add_argument(
         "-f",
         "--firstname",
         dest="first_name",
         type=str,
         help=textc("Input %(dest)s for contact", "RED"),
     )
-    contact_edit_parser.add_argument(
+    contact_set_parser.add_argument(
         "-l",
         "--lastname",
         dest="last_name",
         type=str,
         help=textc("Input %(dest)s for contact", "RED"),
     )
-    contact_edit_parser.add_argument(
+    contact_set_parser.add_argument(
         "-p",
-        "--phone",
+        "--phones",
         dest="phones",
         type=str,
         nargs="+",
         help=textc("Input %(dest)s for contact", "RED"),
     )
-    contact_edit_parser.add_argument(
+    contact_set_parser.add_argument(
         "-e",
         "--email",
         dest="email",
         type=str,
         help=textc("Input %(dest)s for contact", "RED"),
     )
-    contact_edit_parser.add_argument(
+    contact_set_parser.add_argument(
         "-a",
         "--address",
         dest="address",
         type=str,
         help=textc("Input %(dest)s for contact", "RED"),
     )
-    contact_edit_parser.add_argument(
+    contact_set_parser.add_argument(
         "-b",
         "--birthday",
         dest="birthday",

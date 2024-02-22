@@ -20,7 +20,7 @@ __structure_storage_new = {
     "NameAPP2": {"box": "class", "path": "string"},
     # ........
 }
-__structure_class_new = {"stor": {"id": int, "data_obj": ["record1", "record2"]}}
+__structure_class_new = {"stor": {"id": int, "data": ["record1", "record2"]}}
 
 
 my_storage = {}
@@ -87,14 +87,14 @@ def storage_load():
             storage_save_file(my_storage[stor_class.__name__])
 
         # типа новая верси, тестировалась
-        if os.path.exists(my_stor_contacts_path):
-            # storage_init(stor_class, stor_path)
-            try:
-                storage_load_file_new(my_stor_contacts, my_stor_contacts_path)
-            except Exception:
-                print("!!!Error load. Save New structore")
-                storage_save_file_new(my_stor_contacts, my_stor_contacts_path)
-                print(type(Exception))
-        else:
-            # storage_init(stor_class, stor_path)
-            storage_save_file_new(my_stor_contacts, my_stor_contacts_path)
+        # if os.path.exists(my_stor_contacts_path):
+        #     # storage_init(stor_class, stor_path)
+        #     try:
+        #         storage_load_file_new(my_stor_contacts, my_stor_contacts_path)
+        #     except Exception:
+        #         print("!!!Error load. Save New structore")
+        #         storage_save_file_new(my_stor_contacts, my_stor_contacts_path)
+        #         print(type(Exception))
+        # else:
+        #     # storage_init(stor_class, stor_path)
+        #     storage_save_file_new(my_stor_contacts, my_stor_contacts_path)

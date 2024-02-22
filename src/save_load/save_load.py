@@ -5,19 +5,13 @@ import pickle
 
 def storage_load_file_new(storage, path_str):
     filename = path_str
-    # store = storage.contacts
     try:
         with open(filename, "rb") as fh:
             unpacked = pickle.load(fh)
-            # book = unpacked
             storage.data = unpacked
-            # storage["data"] = book
             print("Book loaded !")
     except Exception as err:
-        # book = AddressBook()
-        # print("Book created !")
         raise err
-        # print("load_error")
     return storage
 
 
@@ -26,14 +20,10 @@ def storage_load_file(storage):
     try:
         with open(filename, "rb") as fh:
             unpacked = pickle.load(fh)
-            # book = unpacked
             storage["data"].data = unpacked
-            print("Book loaded !")
+            # print(f"Book loaded {storage.__dict__}!")
     except Exception as err:
-        # book = AddressBook()
-        # print("Book created !")
         raise err
-        # print("load_error")
     return storage
 
 
@@ -42,7 +32,7 @@ def storage_save_file(storage):
     filename = storage["path"]
     with open(filename, "wb") as fh:
         pickle.dump(stor, fh)
-        print("Book saved !")
+        # print(f"Book saved {storage.__name__}!")
 
 
 def storage_save_file_new(my_stor_contacts, my_stor_contacts_path):
